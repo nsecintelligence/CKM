@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Calendar, User } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { ContactInfo, Department } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import { logSecurityEvent } from '../lib/securityLogger';
 
 export default function Contact() {
   const { t, language } = useLanguage();
@@ -19,6 +20,10 @@ export default function Contact() {
   const [aptSubmitted, setAptSubmitted] = useState(false);
   const [aptError, setAptError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  // Honeypot fields — hidden from real users, bots fill them automatically
+  const aptHoneypot = useRef('');
+  const contactHoneypot = useRef('');
 
   useEffect(() => {
     Promise.all([
@@ -42,11 +47,35 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Honeypot check: if filled, silently reject and log as bot
+    if (contactHoneypot.current) {
+      logSecurityEvent('SUSPICIOUS_REQUEST', {
+        reason: 'Honeypot field filled on contact form',
+        form: 'contact',
+        honeypot_value: contactHoneypot.current.substring(0, 100),
+      }, 'high');
+      setSubmitted(true); // Pretend success so bot doesn't retry
+      return;
+    }
+
     setSubmitted(true);
   };
 
   const handleAptSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Honeypot check: if filled, silently reject and log as bot
+    if (aptHoneypot.current) {
+      logSecurityEvent('SUSPICIOUS_REQUEST', {
+        reason: 'Honeypot field filled on appointment form',
+        form: 'appointment',
+        honeypot_value: aptHoneypot.current.substring(0, 100),
+      }, 'high');
+      setAptSubmitted(true); // Pretend success so bot doesn't retry
+      return;
+    }
+
     setSubmitting(true);
     setAptError(false);
     const { error } = await supabase.from('appointments').insert(apt);
@@ -144,6 +173,10 @@ export default function Contact() {
                   </div>
                 ) : (
                   <form onSubmit={handleAptSubmit} className="bg-white rounded-xl p-6 shadow-sm space-y-4">
+                    {/* Honeypot: hidden from humans, bots auto-fill */}
+                    <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }} aria-hidden="true">
+                      <label>Do not fill this field<input type="text" tabIndex={-1} autoComplete="off" onChange={(e) => { aptHoneypot.current = e.target.value; }} /></label>
+                    </div>
                     {aptError && (
                       <div className="bg-red-50 text-red-700 text-sm p-3 rounded-lg">{t('contact.bookingError')}</div>
                     )}
@@ -216,6 +249,10 @@ export default function Contact() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="bg-white rounded-xl p-6 shadow-sm space-y-4">
+                    {/* Honeypot: hidden from humans, bots auto-fill */}
+                    <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }} aria-hidden="true">
+                      <label>Website (leave empty)<input type="text" tabIndex={-1} autoComplete="off" onChange={(e) => { contactHoneypot.current = e.target.value; }} /></label>
+                    </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">{t('contact.fullName')}</label>
                       <input type="text" required value={form.name}

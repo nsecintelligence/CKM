@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="x-supabase-url" content="https://lmuurgptiyfddblheofj.supabase.co">
+  <meta name="x-supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdXVyZ3B0aXlmZGRibGhlb2ZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwOTkyMTUsImV4cCI6MjA5NzY3NTIxNX0.JX-JQCgBVnulq09LWVeuKz0U-675-LPzBGHYamy5pBg">
   <title>Access Denied - Charles Kulwa Memorial Hospital</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -97,5 +100,41 @@
       Patient Needs Come First
     </div>
   </div>
+  <script>
+    (function () {
+      try {
+        var path = window.location.pathname + window.location.search;
+        var params = new URLSearchParams(window.location.search);
+        var supabaseUrl = document.querySelector('meta[name="x-supabase-url"]');
+        var supabaseKey = document.querySelector('meta[name="x-supabase-anon-key"]');
+
+        if (!supabaseUrl || !supabaseKey) return;
+
+        var url = supabaseUrl.content + '/functions/v1/security-ingest';
+        var body = {
+          event_type: 'SUSPICIOUS_REQUEST',
+          severity: 'high',
+          user_agent: navigator.userAgent,
+          path: path.substring(0, 500),
+          method: 'GET',
+          attack_vector: 'HONEYPOT_TRAP',
+          metadata: {
+            reason: 'Honeypot path accessed',
+            referrer: document.referrer ? document.referrer.substring(0, 200) : null,
+            search: window.location.search ? window.location.search.substring(0, 200) : null,
+          }
+        };
+
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + supabaseKey.content,
+          },
+          body: JSON.stringify(body),
+        }).catch(function () {});
+      } catch (e) {}
+    })();
+  </script>
 </body>
 </html>
