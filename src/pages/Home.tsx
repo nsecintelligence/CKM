@@ -243,9 +243,9 @@ export default function Home() {
           </div>
         )}
 
-        <div className="relative container-width text-white z-10">
-          <div className="max-w-2xl px-4 sm:px-0">
-            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-white/95 mb-3 sm:mb-5">
+        <div className="relative container-width text-white z-10 text-center">
+          <div className="max-w-3xl px-4 sm:px-0 mx-auto">
+            <span className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-white/95 mb-3 sm:mb-5">
               <span className="w-6 sm:w-8 h-0.5 bg-red-500" />
              KARIBU CHARLES KULWA MEMORIAL HOSPITAL
             </span>
@@ -256,7 +256,7 @@ export default function Home() {
             <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 sm:mb-9 max-w-xl leading-relaxed">
               {home?.welcome_text || 'Kwetu, kila mgonjwa ni muhimu. Tuko hapa kukusikiliza, kukujali na kukuhudumia, tukitumia utaalamu wetu kuhakikisha unapata huduma inayokufaa.'}
             </p>
-            <div className="flex flex-wrap gap-3 sm:gap-4">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
               <Link
                 to={home?.hero_cta_link || '/contact'}
                 className="inline-flex items-center gap-2 bg-green-700 text-white px-5 sm:px-7 py-3 sm:py-3.5 rounded-lg font-semibold hover:bg-green-800 transition-colors shadow-lg shadow-green-700/25 text-sm sm:text-base"
@@ -278,7 +278,7 @@ export default function Home() {
       <section className="bg-white py-10 md:py-14 border-b border-gray-100">
         <div className="container-width">
           <ScrollReveal animation="fade-up" className="mb-6 md:mb-8">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center gap-3 text-center">
               <div className="w-1 h-8 bg-red-600 rounded-full" />
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Today at CKM</h2>
             </div>
