@@ -250,11 +250,11 @@ export default function Home() {
              KARIBU CHARLES KULWA MEMORIAL HOSPITAL
             </span>
             <h1 className="text-3xl sm:text-[2.8rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] tracking-tight mb-3 sm:mb-5 text-white">
-              {home?.welcome_title?.toUpperCase() || 'KARIBU CHARLES KULWA MEMORIAL HOSPITAL'}
+              {home?.welcome_title?.toUpperCase() || 'MAHITAJI YA MGONJWA KWANZA'}
               {home?.welcome_title_line2 && <span className="block">{home.welcome_title_line2.toUpperCase()}</span>}
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 sm:mb-9 max-w-xl leading-relaxed">
-              {home?.welcome_text || 'Kwetu, kila mgonjwa ni muhimu. Tuko hapa kukusikiliza, kukujali na kukuhudumia, tukitumia utaalamu wetu kuhakikisha unapata huduma inayokufaa.'}
+              {home?.welcome_text || 'Kwetu Afya yako ni kipaumbele chetu. Tunatoa huduma bora na za utaalamu wa hali ya juu, tukitumia vifaa vya kisasa na wataalamu waliobobea.'}
             </p>
             <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
               <Link
