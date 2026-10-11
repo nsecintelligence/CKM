@@ -245,15 +245,15 @@ export default function Home() {
 
         <div className="relative container-width text-white z-10 text-center">
           <div className="max-w-3xl px-4 sm:px-0 mx-auto">
-            <span className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-white/95 mb-3 sm:mb-5">
+            <span className="inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-white/95 mb-3 sm:mb-5 mx-auto">
               <span className="w-6 sm:w-8 h-0.5 bg-red-500" />
-             KARIBU CHARLES KULWA MEMORIAL HOSPITAL
+              KARIBU CHARLES KULWA MEMORIAL HOSPITAL
             </span>
             <h1 className="text-3xl sm:text-[2.8rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] tracking-tight mb-3 sm:mb-5 text-white">
               {home?.welcome_title?.toUpperCase() || 'MAHITAJI YA MGONJWA KWANZA'}
               {home?.welcome_title_line2 && <span className="block">{home.welcome_title_line2.toUpperCase()}</span>}
             </h1>
-            <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 sm:mb-9 max-w-xl leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 sm:mb-9 max-w-2xl mx-auto leading-relaxed">
               {home?.welcome_text || 'Kwetu Afya yako ni kipaumbele chetu. Tunatoa huduma bora na za utaalamu wa hali ya juu, tukitumia vifaa vya kisasa na wataalamu waliobobea.'}
             </p>
             <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
