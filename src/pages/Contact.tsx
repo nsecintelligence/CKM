@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Calendar, User } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Calendar } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { ContactInfo, Department } from '../types';
 import { useLanguage } from '../context/LanguageContext';
@@ -40,7 +40,7 @@ export default function Contact() {
   useEffect(() => {
     if (location.state) {
       const state = location.state as { department?: string; doctorName?: string };
-      if (state.department) setApt(prev => ({ ...prev, department: state.department }));
+      if (state.department) setApt(prev => ({ ...prev, department: state.department || '' }));
       if (state.doctorName) setApt(prev => ({ ...prev, message: language === 'sw' ? `Nataka kuona Daktari ${state.doctorName}` : `I would like to see Dr. ${state.doctorName}` }));
     }
   }, [location.state, language]);

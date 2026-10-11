@@ -74,6 +74,17 @@ export interface ContactInfo {
   updated_at: string;
 }
 
+export interface CKMTVVideo {
+  id: string;
+  title: string;
+  description: string | null;
+  youtube_url: string;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface HomepageContent {
   id: string;
   site_name: string;

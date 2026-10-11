@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
-import type { HomepageContent } from '../../types';
-import { Save } from 'lucide-react';
+import type { HomepageContent, CKMTVVideo } from '../../types';
+import { Save, Plus, Pencil, Trash2, X, Video } from 'lucide-react';
 import ImageUpload from '../../components/ImageUpload';
 
 export default function AdminHomepage() {
@@ -10,6 +10,11 @@ export default function AdminHomepage() {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [videos, setVideos] = useState<CKMTVVideo[]>([]);
+  const [editingVideoId, setEditingVideoId] = useState<string | null>(null);
+  const [videoSaving, setVideoSaving] = useState(false);
+  const [videoError, setVideoError] = useState('');
+  const [videoForm, setVideoForm] = useState({ title: '', description: '', youtube_url: '', sort_order: 0, is_active: true });
   const [form, setForm] = useState({
     site_name: '', site_logo_url: '',
     welcome_title: '', welcome_title_line2: '', welcome_text: '', hero_image_url: '', hero_cta_text: '', hero_cta_link: '',
@@ -42,6 +47,59 @@ export default function AdminHomepage() {
       setLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    supabase.from('ckmtv_videos').select('*').order('sort_order').order('created_at', { ascending: false }).then(({ data, error }) => {
+      if (!error && data) setVideos(data);
+    });
+  }, []);
+
+  const resetVideoForm = () => {
+    setEditingVideoId(null);
+    setVideoForm({ title: '', description: '', youtube_url: '', sort_order: videos.length, is_active: true });
+  };
+
+  const handleVideoSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setVideoSaving(true);
+    setVideoError('');
+    const payload = {
+      title: videoForm.title.trim(),
+      description: videoForm.description.trim() || null,
+      youtube_url: videoForm.youtube_url.trim(),
+      sort_order: Number(videoForm.sort_order) || 0,
+      is_active: videoForm.is_active,
+    };
+    const result = editingVideoId
+      ? await supabase.from('ckmtv_videos').update(payload).eq('id', editingVideoId).select().maybeSingle()
+      : await supabase.from('ckmtv_videos').insert(payload).select().maybeSingle();
+    if (result.error || !result.data) {
+      console.error('CKM TV video save error:', result.error);
+      setVideoError('Could not save this video. Check the YouTube link and try again.');
+    } else {
+      setVideos((current) => editingVideoId ? current.map((video) => video.id === editingVideoId ? result.data as CKMTVVideo : video) : [...current, result.data as CKMTVVideo].sort((a, b) => a.sort_order - b.sort_order));
+      resetVideoForm();
+    }
+    setVideoSaving(false);
+  };
+
+  const handleVideoDelete = async (id: string) => {
+    if (!window.confirm('Remove this video from CKM TV?')) return;
+    const { error } = await supabase.from('ckmtv_videos').delete().eq('id', id);
+    if (error) {
+      console.error('CKM TV video delete error:', error);
+      setVideoError('Could not remove this video. Please try again.');
+      return;
+    }
+    setVideos((current) => current.filter((video) => video.id !== id));
+    if (editingVideoId === id) resetVideoForm();
+  };
+
+  const startVideoEdit = (video: CKMTVVideo) => {
+    setEditingVideoId(video.id);
+    setVideoForm({ title: video.title, description: video.description || '', youtube_url: video.youtube_url, sort_order: video.sort_order, is_active: video.is_active });
+    setVideoError('');
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -200,6 +258,45 @@ export default function AdminHomepage() {
           <div className="mt-4">
             <label className="block text-sm font-medium text-gray-700 mb-1">Announcement Text</label>
             <textarea rows={2} value={form.announcement_text} onChange={(e) => setForm({ ...form, announcement_text: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none" />
+          </div>
+        </div>
+        <div className="border-t pt-5">
+          <div className="flex items-center justify-between gap-4 mb-2">
+            <div>
+              <h3 className="font-semibold text-gray-900 flex items-center gap-2"><Video className="w-5 h-5 text-red-600" /> CKM TV Videos</h3>
+              <p className="text-sm text-gray-500 mt-1">Add YouTube links to show playable videos after Insurance Services on the homepage.</p>
+            </div>
+            {editingVideoId && <button type="button" onClick={resetVideoForm} className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900"><X className="w-4 h-4" /> Cancel edit</button>}
+          </div>
+          <form onSubmit={handleVideoSave} className="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Video title</label>
+                <input required value={videoForm.title} onChange={(e) => setVideoForm({ ...videoForm, title: e.target.value })} placeholder="e.g. Meet our maternity team" className="w-full px-3 py-2 rounded-lg border border-gray-300 outline-none focus:ring-2 focus:ring-green-700" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">YouTube link</label>
+                <input required type="url" value={videoForm.youtube_url} onChange={(e) => setVideoForm({ ...videoForm, youtube_url: e.target.value })} placeholder="https://www.youtube.com/watch?v=..." className="w-full px-3 py-2 rounded-lg border border-gray-300 outline-none focus:ring-2 focus:ring-green-700" />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Description (optional)</label>
+              <textarea rows={2} value={videoForm.description} onChange={(e) => setVideoForm({ ...videoForm, description: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 outline-none focus:ring-2 focus:ring-green-700" />
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              <label className="flex items-center gap-2 text-sm text-gray-700"><input type="checkbox" checked={videoForm.is_active} onChange={(e) => setVideoForm({ ...videoForm, is_active: e.target.checked })} className="w-4 h-4 text-green-700 rounded" /> Show on homepage</label>
+              <label className="flex items-center gap-2 text-sm text-gray-700">Display order <input type="number" min="0" value={videoForm.sort_order} onChange={(e) => setVideoForm({ ...videoForm, sort_order: Number(e.target.value) })} className="w-20 px-2 py-1.5 rounded-lg border border-gray-300" /></label>
+              <button type="submit" disabled={videoSaving} className="btn-primary inline-flex items-center gap-2"><Plus className="w-4 h-4" /> {videoSaving ? 'Saving...' : editingVideoId ? 'Update Video' : 'Add Video'}</button>
+            </div>
+          </form>
+          {videoError && <p className="mt-3 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">{videoError}</p>}
+          <div className="mt-4 space-y-2">
+            {videos.length === 0 ? <p className="text-sm text-gray-500">No CKM TV videos added yet.</p> : videos.map((video) => (
+              <div key={video.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border border-gray-200 p-3 bg-white">
+                <div className="min-w-0"><p className="font-medium text-gray-900 truncate">{video.title || 'Untitled video'}</p><p className="text-xs text-gray-500 truncate">{video.youtube_url} · {video.is_active ? 'Visible' : 'Hidden'}</p></div>
+                <div className="flex items-center gap-2 shrink-0"><button type="button" onClick={() => startVideoEdit(video)} className="p-2 text-gray-600 hover:text-green-700" aria-label={`Edit ${video.title}`}><Pencil className="w-4 h-4" /></button><button type="button" onClick={() => handleVideoDelete(video.id)} className="p-2 text-gray-600 hover:text-red-700" aria-label={`Delete ${video.title}`}><Trash2 className="w-4 h-4" /></button></div>
+              </div>
+            ))}
           </div>
         </div>
         {saveError && (

@@ -1,10 +1,28 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, CalendarDays } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, Video } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide, FAQ } from '../types';
+import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide, FAQ, CKMTVVideo } from '../types';
 import ScrollReveal from '../components/ScrollReveal';
 import { HelpCircle, ChevronDown } from 'lucide-react';
+
+function getYouTubeEmbedUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.toLowerCase().replace(/^www\./, '');
+    if (host === 'youtube.com' || host === 'm.youtube.com') {
+      const videoId = parsed.searchParams.get('v');
+      return videoId && /^[A-Za-z0-9_-]{11}$/.test(videoId) ? `https://www.youtube-nocookie.com/embed/${videoId}` : null;
+    }
+    if (host === 'youtu.be') {
+      const videoId = parsed.pathname.slice(1).split('/')[0];
+      return /^[A-Za-z0-9_-]{11}$/.test(videoId) ? `https://www.youtube-nocookie.com/embed/${videoId}` : null;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
 
 export default function Home() {
   const [home, setHome] = useState<HomepageContent | null>(null);
@@ -13,19 +31,21 @@ export default function Home() {
   const [contact, setContact] = useState<ContactInfo | null>(null);
   const [slides, setSlides] = useState<HeroSlide[]>([]);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [ckmtvVideos, setCkmtvVideos] = useState<CKMTVVideo[]>([]);
   const [openFaq, setOpenFaq] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [homeRes, servicesRes, newsRes, contactRes, slidesRes, faqRes] = await Promise.all([
+      const [homeRes, servicesRes, newsRes, contactRes, slidesRes, faqRes, ckmtvRes] = await Promise.all([
         supabase.from('homepage_content').select('*').maybeSingle(),
         supabase.from('services').select('*').eq('featured', true).order('sort_order'),
         supabase.from('news').select('*').eq('is_published', true).order('published_at', { ascending: false }).limit(3),
         supabase.from('contact_info').select('*').maybeSingle(),
         supabase.from('hero_slides').select('*').eq('is_active', true).order('sort_order'),
         supabase.from('faq').select('*').order('sort_order').limit(6),
+        supabase.from('ckmtv_videos').select('*').eq('is_active', true).order('sort_order').order('created_at', { ascending: false }),
       ]);
       if (homeRes.data) setHome(homeRes.data);
       if (servicesRes.data) setFeaturedServices(servicesRes.data);
@@ -33,6 +53,7 @@ export default function Home() {
       if (contactRes.data) setContact(contactRes.data);
       if (slidesRes.data && slidesRes.data.length > 0) setSlides(slidesRes.data);
       if (faqRes.data) setFaqs(faqRes.data);
+      if (ckmtvRes.data) setCkmtvVideos(ckmtvRes.data);
       setLoading(false);
     };
     fetchData();
@@ -229,13 +250,11 @@ export default function Home() {
              KARIBU CHARLES KULWA MEMORIAL HOSPITAL
             </span>
             <h1 className="text-3xl sm:text-[2.8rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] tracking-tight mb-3 sm:mb-5 text-white">
-              MAHITAJI YA MGONJWA KWANZA
+              {home?.welcome_title?.toUpperCase() || 'KARIBU CHARLES KULWA MEMORIAL HOSPITAL'}
+              {home?.welcome_title_line2 && <span className="block">{home.welcome_title_line2.toUpperCase()}</span>}
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 sm:mb-9 max-w-xl leading-relaxed">
-              Kwetu, kila mgonjwa ni muhimu. Tuko hapa kukusikiliza, kukujali na kukuhudumia, tukitumia utaalamu wetu kuhakikisha unapata huduma inayokufaa.
-
-
-
+              {home?.welcome_text || 'Kwetu, kila mgonjwa ni muhimu. Tuko hapa kukusikiliza, kukujali na kukuhudumia, tukitumia utaalamu wetu kuhakikisha unapata huduma inayokufaa.'}
             </p>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <Link
@@ -526,6 +545,48 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* CKM TV */}
+      {ckmtvVideos.length > 0 && (
+        <section className="section-padding bg-white">
+          <div className="container-width">
+            <ScrollReveal animation="fade-up" className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 bg-red-50 text-red-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+                <Video className="w-4 h-4" />
+                CKM TV
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Watch CKM TV</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">Stories, updates, health education, and a closer look at care in our hospital.</p>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {ckmtvVideos.map((video, index) => {
+                const embedUrl = getYouTubeEmbedUrl(video.youtube_url);
+                if (!embedUrl) return null;
+                return (
+                  <ScrollReveal key={video.id} animation="fade-up" delay={index * 100}>
+                    <article className="overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 shadow-sm hover:shadow-lg transition-shadow">
+                      <div className="aspect-video bg-gray-900">
+                        <iframe
+                          src={embedUrl}
+                          title={video.title || 'CKM TV video'}
+                          className="w-full h-full"
+                          loading="lazy"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                        />
+                      </div>
+                      <div className="p-5">
+                        <h3 className="text-lg font-semibold text-gray-900">{video.title}</h3>
+                        {video.description && <p className="mt-2 text-sm leading-relaxed text-gray-600">{video.description}</p>}
+                      </div>
+                    </article>
+                  </ScrollReveal>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Latest News */}
       {latestNews.length > 0 && (
