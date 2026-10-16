@@ -187,3 +187,89 @@ export interface DoctorSchedule {
   created_at: string;
   updated_at: string;
 }
+
+export interface DeveloperServiceAccount {
+  id: string;
+  provider_name: string;
+  display_label: string;
+  category: 'api' | 'database' | 'hosting' | 'ai';
+  status: 'active' | 'inactive' | 'error';
+  has_sync_error: boolean;
+  sync_error_message: string | null;
+  last_sync_at: string | null;
+  available_quota: string | null;
+  rate_limit_info: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface InfrastructureUsage {
+  id: string;
+  service_account_id: string | null;
+  provider_name: string;
+  metric_type: string;
+  metric_value: number;
+  unit: string | null;
+  billing_period_start: string;
+  billing_period_end: string;
+  is_estimated: boolean;
+  recorded_at: string;
+  created_at: string;
+}
+
+export interface InfrastructureInvoice {
+  id: string;
+  provider_name: string;
+  service_category: string;
+  invoice_number: string | null;
+  amount: number;
+  currency: string;
+  amount_usd: number | null;
+  billing_period_start: string;
+  billing_period_end: string;
+  due_date: string | null;
+  payment_status: 'unpaid' | 'paid' | 'overdue' | 'cancelled';
+  paid_at: string | null;
+  invoice_document_url: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface InfrastructureBudget {
+  id: string;
+  category: string;
+  monthly_limit_usd: number;
+  alert_threshold_pct: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface InfrastructureAlert {
+  id: string;
+  alert_type: string;
+  severity: 'info' | 'warning' | 'critical';
+  title: string;
+  message: string;
+  related_provider: string | null;
+  related_category: string | null;
+  is_resolved: boolean;
+  resolved_at: string | null;
+  triggered_at: string;
+  created_at: string;
+}
+
+export interface InfrastructureAuditLog {
+  id: string;
+  actor_id: string | null;
+  actor_email: string | null;
+  action: string;
+  entity_type: string | null;
+  entity_id: string | null;
+  details: Record<string, unknown> | null;
+  ip_address: string | null;
+  user_agent: string | null;
+  created_at: string;
+}

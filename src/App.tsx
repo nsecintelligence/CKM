@@ -31,6 +31,18 @@ import AdminSocPanel from './pages/admin/SocPanel';
 import AdminSpecialistDoctors from './pages/admin/SpecialistDoctors';
 import AdminLogin from './pages/admin/Login';
 import ProtectedRoute from './components/admin/ProtectedRoute';
+import DeveloperProtectedRoute from './components/admin/DeveloperProtectedRoute';
+import DeveloperLayout from './components/admin/DeveloperLayout';
+import DeveloperLogin from './pages/developer/Login';
+import DeveloperOverview from './pages/developer/Overview';
+import DeveloperApiBilling from './pages/developer/ApiBilling';
+import DeveloperDatabase from './pages/developer/DatabaseSupabase';
+import DeveloperHosting from './pages/developer/Hosting';
+import DeveloperAICredits from './pages/developer/AICredits';
+import DeveloperInvoices from './pages/developer/Invoices';
+import DeveloperBudgetsAlerts from './pages/developer/BudgetsAlerts';
+import DeveloperAuditLogs from './pages/developer/AuditLogs';
+import DeveloperSettings from './pages/developer/SettingsPage';
 
 function App() {
   return (
@@ -68,6 +80,18 @@ function App() {
           <Route path="security" element={<AdminSecurityLogs />} />
           <Route path="soc" element={<AdminSocPanel />} />
           <Route path="specialist-doctors" element={<AdminSpecialistDoctors />} />
+        </Route>
+        <Route path="/developer-admin/login" element={<DeveloperLogin />} />
+        <Route path="/developer-admin" element={<DeveloperProtectedRoute><DeveloperLayout /></DeveloperProtectedRoute>}>
+          <Route index element={<DeveloperOverview />} />
+          <Route path="api-billing" element={<DeveloperApiBilling />} />
+          <Route path="database" element={<DeveloperDatabase />} />
+          <Route path="hosting" element={<DeveloperHosting />} />
+          <Route path="ai-credits" element={<DeveloperAICredits />} />
+          <Route path="invoices" element={<DeveloperInvoices />} />
+          <Route path="budgets" element={<DeveloperBudgetsAlerts />} />
+          <Route path="audit-logs" element={<DeveloperAuditLogs />} />
+          <Route path="settings" element={<DeveloperSettings />} />
         </Route>
       </Routes>
     </BrowserRouter>
