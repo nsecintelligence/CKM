@@ -260,15 +260,30 @@ export default function AdminHomepage() {
             <textarea rows={2} value={form.announcement_text} onChange={(e) => setForm({ ...form, announcement_text: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none" />
           </div>
         </div>
-        <div className="border-t pt-5">
-          <div className="flex items-center justify-between gap-4 mb-2">
-            <div>
-              <h3 className="font-semibold text-gray-900 flex items-center gap-2"><Video className="w-5 h-5 text-red-600" /> CKM TV Videos</h3>
-              <p className="text-sm text-gray-500 mt-1">Add YouTube links to show playable videos after Insurance Services on the homepage.</p>
-            </div>
-            {editingVideoId && <button type="button" onClick={resetVideoForm} className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900"><X className="w-4 h-4" /> Cancel edit</button>}
+        {saveError && (
+          <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+            {saveError}
           </div>
-          <form onSubmit={handleVideoSave} className="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-4">
+        )}
+        {saveSuccess && (
+          <div className="p-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm">
+            Changes saved successfully!
+          </div>
+        )}
+        <button type="submit" disabled={saving} className="btn-primary inline-flex items-center gap-2">
+          <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save Changes'}
+        </button>
+      </form>
+
+      <div className="mt-8">
+        <div className="flex items-center justify-between gap-4 mb-2">
+          <div>
+            <h3 className="font-semibold text-gray-900 flex items-center gap-2"><Video className="w-5 h-5 text-red-600" /> CKM TV Videos</h3>
+            <p className="text-sm text-gray-500 mt-1">Add YouTube links to show playable videos after Insurance Services on the homepage.</p>
+          </div>
+          {editingVideoId && <button type="button" onClick={resetVideoForm} className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900"><X className="w-4 h-4" /> Cancel edit</button>}
+        </div>
+        <form onSubmit={handleVideoSave} className="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Video title</label>
@@ -299,20 +314,6 @@ export default function AdminHomepage() {
             ))}
           </div>
         </div>
-        {saveError && (
-          <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
-            {saveError}
-          </div>
-        )}
-        {saveSuccess && (
-          <div className="p-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm">
-            Changes saved successfully!
-          </div>
-        )}
-        <button type="submit" disabled={saving} className="btn-primary inline-flex items-center gap-2">
-          <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save Changes'}
-        </button>
-      </form>
-    </div>
+      </div>
   );
 }
