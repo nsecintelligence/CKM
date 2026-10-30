@@ -27,6 +27,7 @@ const WELCOME_MESSAGE =
   "Hello! I'm NIULIZE MIMI, your AI assistant at Charles Kulwa Memorial Hospital. You can ask me about healthcare, hospital services, technology, education, science, or any other topic. How can I help you today?";
 
 export default function AIHealthAssistant() {
+    return null;
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
