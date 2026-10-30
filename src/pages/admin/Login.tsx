@@ -524,11 +524,11 @@ export default function AdminLogin() {
               </div>
 
               <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 tracking-tight">
-                Administrator Sign In
+                Sign In
               </h2>
 
               <p className="text-gray-500 text-sm leading-relaxed">
-                Welcome back. Sign in using your authorized hospital administrator credentials.
+                Welcome back. Sign in using your authorized  credentials.
               </p>
 
             </div>
