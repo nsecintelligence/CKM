@@ -274,56 +274,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Today at CKM */}
-      <section className="bg-white py-10 md:py-14 border-b border-gray-100">
-        <div className="container-width">
-          <ScrollReveal animation="fade-up" className="mb-6 md:mb-8">
-            <div className="flex items-center justify-center gap-3 text-center">
-              <div className="w-1 h-8 bg-red-600 rounded-full" />
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Today at CKM</h2>
-            </div>
-          </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <ScrollReveal animation="fade-up" delay={0}>
-              <Link to="/services" className="bg-red-50 border border-red-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-red-200 transition-all group">
-                <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <HeartPulse className="w-6 h-6" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Emergency</h3>
-                <p className="text-xs text-gray-500 mt-1">24/7 Care</p>
-              </Link>
-            </ScrollReveal>
-            <ScrollReveal animation="fade-up" delay={100}>
-              <Link to="/services" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
-                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <FlaskConical className="w-6 h-6" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Laboratory</h3>
-                <p className="text-xs text-gray-500 mt-1">Open Today</p>
-              </Link>
-            </ScrollReveal>
-            <ScrollReveal animation="fade-up" delay={200}>
-              <Link to="/services" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
-                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <Pill className="w-6 h-6" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Pharmacy</h3>
-                <p className="text-xs text-gray-500 mt-1">Open Today</p>
-              </Link>
-            </ScrollReveal>
-            <ScrollReveal animation="fade-up" delay={300}>
-              <Link to="/clinic" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
-                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <Stethoscope className="w-6 h-6" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Specialist Clinic</h3>
-                <p className="text-xs text-gray-500 mt-1">By Appointment</p>
-              </Link>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
       {/* Stats */}
       <section className="bg-white py-12 border-b">
         <div className="container-width">
@@ -397,6 +347,56 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* Today at CKM */}
+      <section className="bg-white py-10 md:py-14 border-b border-gray-100">
+        <div className="container-width">
+          <ScrollReveal animation="fade-up" className="mb-6 md:mb-8">
+            <div className="flex items-center justify-center gap-3 text-center">
+              <div className="w-1 h-8 bg-red-600 rounded-full" />
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Today at CKM</h2>
+            </div>
+          </ScrollReveal>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <ScrollReveal animation="fade-up" delay={0}>
+              <Link to="/services" className="bg-red-50 border border-red-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-red-200 transition-all group">
+                <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                  <HeartPulse className="w-6 h-6" />
+                </div>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Emergency</h3>
+                <p className="text-xs text-gray-500 mt-1">24/7 Care</p>
+              </Link>
+            </ScrollReveal>
+            <ScrollReveal animation="fade-up" delay={100}>
+              <Link to="/services" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
+                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                  <FlaskConical className="w-6 h-6" />
+                </div>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Laboratory</h3>
+                <p className="text-xs text-gray-500 mt-1">Open Today</p>
+              </Link>
+            </ScrollReveal>
+            <ScrollReveal animation="fade-up" delay={200}>
+              <Link to="/services" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
+                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                  <Pill className="w-6 h-6" />
+                </div>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Pharmacy</h3>
+                <p className="text-xs text-gray-500 mt-1">Open Today</p>
+              </Link>
+            </ScrollReveal>
+            <ScrollReveal animation="fade-up" delay={300}>
+              <Link to="/clinic" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
+                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                  <Stethoscope className="w-6 h-6" />
+                </div>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Specialist Clinic</h3>
+                <p className="text-xs text-gray-500 mt-1">By Appointment</p>
+              </Link>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
 
       {featuredServices.length > 0 && <FeaturedServices services={featuredServices} />}
 
