@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, Video } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, Activity, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, Video, type LucideIcon } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide, FAQ, CKMTVVideo } from '../types';
 import ScrollReveal from '../components/ScrollReveal';
@@ -398,40 +398,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* Featured Services */}
-      {featuredServices.length > 0 && (
-        <section className="section-padding bg-gray-50">
-          <div className="container-width">
-            <ScrollReveal animation="fade-up" className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Our Services</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">Comprehensive healthcare services delivered with cutting-edge technology and compassionate care.</p>
-            </ScrollReveal>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredServices.map((service, i) => (
-                <ScrollReveal key={service.id} animation="fade-up" delay={i * 100}>
-                <div className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow group">
-                  <div className="h-48 overflow-hidden">
-                    <img src={service.image_url || ''} alt={service.name} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.name}</h3>
-                    <p className="text-sm text-gray-600 line-clamp-3">{service.description}</p>
-                    <Link to={`/services`} className="inline-flex items-center gap-1 text-green-700 text-sm font-medium mt-3 hover:underline">
-                      Learn more <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-                </ScrollReveal>
-              ))}
-            </div>
-            <ScrollReveal animation="fade-up" className="text-center mt-10">
-              <Link to="/services" className="btn-primary inline-flex items-center gap-2">
-                View All Services <ArrowRight className="w-4 h-4" />
-              </Link>
-            </ScrollReveal>
-          </div>
-        </section>
-      )}
+      {featuredServices.length > 0 && <FeaturedServices services={featuredServices} />}
 
       {/* Insurance Services */}
       <section className="section-padding bg-gradient-to-br from-emerald-50 to-green-50">
@@ -709,5 +676,150 @@ export default function Home() {
         </div>
       </section>
     </div>
+  );
+}
+
+function getServiceIcon(name: string): LucideIcon {
+  const label = name.toLowerCase();
+  if (label.includes('laboratory') || label.includes('lab')) return FlaskConical;
+  if (label.includes('pharmacy')) return Pill;
+  if (label.includes('maternity') || label.includes('mother') || label.includes('child')) return HeartPulse;
+  if (label.includes('emergency')) return Activity;
+  if (label.includes('diagnos') || label.includes('scan')) return ShieldCheck;
+  if (label.includes('surgery') || label.includes('theatre')) return Stethoscope;
+  return Stethoscope;
+}
+
+function getServiceCategory(name: string): string {
+  const label = name.toLowerCase();
+  if (label.includes('laboratory') || label.includes('lab')) return 'Diagnostics';
+  if (label.includes('pharmacy')) return 'Medication';
+  if (label.includes('maternity') || label.includes('mother') || label.includes('child')) return 'Family care';
+  if (label.includes('emergency')) return '24/7 response';
+  if (label.includes('surgery') || label.includes('theatre')) return 'Specialist care';
+  return 'Clinical care';
+}
+
+function FeaturedServices({ services }: { services: Service[] }) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const mobileTrackRef = useRef<HTMLDivElement | null>(null);
+  const [desktopMotion, setDesktopMotion] = useState({ height: 0, travel: 0 });
+  const [translateX, setTranslateX] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const updateDesktopMotion = () => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (window.innerWidth < 768 || prefersReducedMotion || !sectionRef.current || !trackRef.current) {
+        setDesktopMotion({ height: 0, travel: 0 });
+        setTranslateX(0);
+        return;
+      }
+      const travel = Math.max(trackRef.current.scrollWidth - window.innerWidth + 48, 0);
+      setDesktopMotion({ height: window.innerHeight + travel, travel });
+    };
+
+    updateDesktopMotion();
+    const observer = new ResizeObserver(updateDesktopMotion);
+    if (trackRef.current) observer.observe(trackRef.current);
+    window.addEventListener('resize', updateDesktopMotion);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateDesktopMotion);
+    };
+  }, [services.length]);
+
+  useEffect(() => {
+    if (!desktopMotion.travel) return;
+    let frame = 0;
+    const updateProgress = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (!sectionRef.current) return;
+        const start = sectionRef.current.offsetTop;
+        const range = Math.max(desktopMotion.height - window.innerHeight, 1);
+        const progress = Math.min(Math.max((window.scrollY - start) / range, 0), 1);
+        setTranslateX(-desktopMotion.travel * progress);
+      });
+    };
+
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', updateProgress);
+    };
+  }, [desktopMotion]);
+
+  useEffect(() => {
+    const container = mobileTrackRef.current;
+    if (!container) return;
+    const updateActiveIndex = () => {
+      const cards = Array.from(container.children) as HTMLElement[];
+      if (cards.length === 0) return;
+      const nearestIndex = cards.reduce((closest, card, index) => {
+        const closestDistance = Math.abs(cards[closest].offsetLeft - container.scrollLeft);
+        const cardDistance = Math.abs(card.offsetLeft - container.scrollLeft);
+        return cardDistance < closestDistance ? index : closest;
+      }, 0);
+      setActiveIndex(nearestIndex);
+    };
+    container.addEventListener('scroll', updateActiveIndex, { passive: true });
+    return () => container.removeEventListener('scroll', updateActiveIndex);
+  }, [services.length]);
+
+  const scrollToMobileCard = (index: number) => {
+    const container = mobileTrackRef.current;
+    const card = container?.children[index] as HTMLElement | undefined;
+    if (container && card) container.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+  };
+
+  const renderCard = (service: Service, mobile = false) => {
+    const Icon = getServiceIcon(service.name);
+    return (
+      <article key={service.id} className={`${mobile ? 'w-[82vw] max-w-[340px] shrink-0 snap-start' : 'w-[min(320px,calc(100vw-48px))] shrink-0'} group relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-white/15 bg-emerald-950 shadow-xl shadow-black/20 transition duration-500 hover:scale-[1.03] hover:border-emerald-300/70 hover:shadow-2xl hover:shadow-emerald-950/40`}>
+        {service.image_url ? <img src={service.image_url} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover transition duration-700 ease-out group-hover:scale-110" /> : <div className="absolute inset-0 bg-gradient-to-br from-emerald-800 via-emerald-950 to-gray-950" />}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/10" />
+        <div className="relative flex h-full flex-col justify-between p-5 text-white sm:p-6">
+          <div className="flex items-start justify-between gap-3">
+            <span className="rounded-full border border-white/25 bg-black/20 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/90 backdrop-blur-sm">{getServiceCategory(service.name)}</span>
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/15 backdrop-blur-md"><Icon className="h-5 w-5" aria-hidden="true" /></div>
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold leading-tight tracking-tight">{service.name}</h3>
+            <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-white/80">{service.description}</p>
+            <Link to="/services" className="mt-6 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-emerald-800 transition duration-300 hover:w-14 hover:bg-emerald-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-950" aria-label={`Learn more about ${service.name}`}><ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" /></Link>
+          </div>
+        </div>
+      </article>
+    );
+  };
+
+  return (
+    <section ref={sectionRef} className="relative overflow-hidden bg-gray-950 text-white md:overflow-visible" style={desktopMotion.height ? { height: `${desktopMotion.height}px` } : undefined}>
+      <div className={desktopMotion.height ? 'md:sticky md:top-0 md:flex md:h-screen md:items-center md:overflow-hidden' : ''}>
+        <div className="w-full py-16 md:py-0">
+          <div className="container-width">
+            <div className="mb-10 flex items-end justify-between gap-6 md:mb-12">
+              <div className="max-w-2xl">
+                <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> What we do</span>
+                <h2 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl">Our Featured Services</h2>
+                <span className="mt-5 block h-1 w-16 rounded-full bg-emerald-400" />
+                <p className="mt-5 max-w-xl text-base leading-relaxed text-gray-300 sm:text-lg">Expert care, modern facilities, and a compassionate team supporting every step of your health journey.</p>
+              </div>
+              <Link to="/services" className="hidden shrink-0 items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-emerald-400 hover:bg-emerald-400/10 md:inline-flex">View all <ArrowRight className="h-4 w-4" /></Link>
+            </div>
+            <div ref={mobileTrackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">{services.map((service) => renderCard(service, true))}</div>
+            <div className="hidden md:block"><div ref={trackRef} className="flex gap-6 will-change-transform" style={{ transform: `translate3d(${translateX}px, 0, 0)` }}>{services.map((service) => renderCard(service))}</div></div>
+            <div className="mt-6 flex items-center justify-between md:hidden">
+              <div className="flex items-center gap-2" aria-label={`Service ${activeIndex + 1} of ${services.length}`}>{services.map((service, index) => <button key={service.id} type="button" onClick={() => scrollToMobileCard(index)} className={`h-2 rounded-full transition-all ${index === activeIndex ? 'w-7 bg-emerald-400' : 'w-2 bg-white/30'}`} aria-label={`Go to service ${index + 1}`} />)}</div>
+              <div className="flex gap-2"><button type="button" onClick={() => scrollToMobileCard(Math.max(activeIndex - 1, 0))} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-emerald-400 hover:text-emerald-300 disabled:opacity-40" disabled={activeIndex === 0} aria-label="Previous service"><ChevronLeft className="h-5 w-5" /></button><button type="button" onClick={() => scrollToMobileCard(Math.min(activeIndex + 1, services.length - 1))} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-emerald-400 hover:text-emerald-300 disabled:opacity-40" disabled={activeIndex === services.length - 1} aria-label="Next service"><ChevronRightIcon className="h-5 w-5" /></button></div>
+            </div>
+            <div className="mt-8 flex justify-center md:hidden"><Link to="/services" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 hover:text-emerald-200">View all services <ArrowRight className="h-4 w-4" /></Link></div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
