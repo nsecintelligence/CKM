@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Users, Award, Activity, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, Video, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, Activity, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, Video, BookOpen, Apple, Droplet, Baby, type LucideIcon } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide, FAQ, CKMTVVideo } from '../types';
 import ScrollReveal from '../components/ScrollReveal';
@@ -348,55 +348,8 @@ export default function Home() {
         </section>
       )}
 
-      {/* Today at CKM */}
-      <section className="bg-white py-10 md:py-14 border-b border-gray-100">
-        <div className="container-width">
-          <ScrollReveal animation="fade-up" className="mb-6 md:mb-8">
-            <div className="flex items-center justify-center gap-3 text-center">
-              <div className="w-1 h-8 bg-red-600 rounded-full" />
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Today at CKM</h2>
-            </div>
-          </ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <ScrollReveal animation="fade-up" delay={0}>
-              <Link to="/services" className="bg-red-50 border border-red-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-red-200 transition-all group">
-                <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <HeartPulse className="w-6 h-6" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Emergency</h3>
-                <p className="text-xs text-gray-500 mt-1">24/7 Care</p>
-              </Link>
-            </ScrollReveal>
-            <ScrollReveal animation="fade-up" delay={100}>
-              <Link to="/services" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
-                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <FlaskConical className="w-6 h-6" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Laboratory</h3>
-                <p className="text-xs text-gray-500 mt-1">Open Today</p>
-              </Link>
-            </ScrollReveal>
-            <ScrollReveal animation="fade-up" delay={200}>
-              <Link to="/services" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
-                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <Pill className="w-6 h-6" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Pharmacy</h3>
-                <p className="text-xs text-gray-500 mt-1">Open Today</p>
-              </Link>
-            </ScrollReveal>
-            <ScrollReveal animation="fade-up" delay={300}>
-              <Link to="/clinic" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
-                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <Stethoscope className="w-6 h-6" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Specialist Clinic</h3>
-                <p className="text-xs text-gray-500 mt-1">By Appointment</p>
-              </Link>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
+      {/* Today at CKM — Health Education Carousel */}
+      <HealthEducationCarousel />
 
       {featuredServices.length > 0 && <FeaturedServices services={featuredServices} />}
 
@@ -818,6 +771,172 @@ function FeaturedServices({ services }: { services: Service[] }) {
             </div>
             <div className="mt-8 flex justify-center md:hidden"><Link to="/services" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 hover:text-emerald-200">View all services <ArrowRight className="h-4 w-4" /></Link></div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+type HealthSlide = {
+  id: number;
+  category: string;
+  title: string;
+  description: string;
+  Icon: LucideIcon;
+  gradient: string;
+  accent: string;
+  tagBg: string;
+  tagText: string;
+  iconBg: string;
+};
+
+const healthSlides: HealthSlide[] = [
+  {
+    id: 1,
+    category: 'Heart Health',
+    title: '5 Ways to Lower Blood Pressure Naturally',
+    description: 'Simple lifestyle changes — from reducing sodium to staying active — can help keep your blood pressure in a healthy range and protect your heart long term.',
+    Icon: HeartPulse,
+    gradient: 'from-rose-50 via-white to-red-50',
+    accent: 'bg-red-600',
+    tagBg: 'bg-red-100',
+    tagText: 'text-red-700',
+    iconBg: 'bg-red-600',
+  },
+  {
+    id: 2,
+    category: 'Nutrition',
+    title: 'The Ultimate Guide to Balanced Meal Planning',
+    description: 'Build plates that nourish: learn how to combine proteins, whole grains, and fresh produce into affordable, balanced meals the whole family will enjoy.',
+    Icon: Apple,
+    gradient: 'from-emerald-50 via-white to-green-50',
+    accent: 'bg-green-700',
+    tagBg: 'bg-emerald-100',
+    tagText: 'text-emerald-700',
+    iconBg: 'bg-green-700',
+  },
+  {
+    id: 3,
+    category: 'Chronic Care',
+    title: 'Understanding Early Signs of Type 2 Diabetes',
+    description: 'Recognising the warning signs early — increased thirst, fatigue, blurred vision — makes a big difference. Learn what to watch for and when to get tested.',
+    Icon: Droplet,
+    gradient: 'from-sky-50 via-white to-blue-50',
+    accent: 'bg-sky-600',
+    tagBg: 'bg-sky-100',
+    tagText: 'text-sky-700',
+    iconBg: 'bg-sky-600',
+  },
+  {
+    id: 4,
+    category: 'Family Wellness',
+    title: 'Boosting Immunity: Foods Rich in Vitamin C',
+    description: 'Discover everyday foods packed with vitamin C that help strengthen your family’s immune system and keep colds and infections at bay all year round.',
+    Icon: Baby,
+    gradient: 'from-amber-50 via-white to-orange-50',
+    accent: 'bg-amber-600',
+    tagBg: 'bg-amber-100',
+    tagText: 'text-amber-700',
+    iconBg: 'bg-amber-600',
+  },
+];
+
+function HealthEducationCarousel() {
+  const [active, setActive] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+
+  const goTo = useCallback((index: number) => setActive((index + healthSlides.length) % healthSlides.length), []);
+  const next = useCallback(() => goTo(active + 1), [active, goTo]);
+  const prev = useCallback(() => goTo(active - 1), [active, goTo]);
+
+  useEffect(() => {
+    if (isPaused || healthSlides.length <= 1) return;
+    const interval = setInterval(() => setActive((prevIndex) => (prevIndex + 1) % healthSlides.length), 5000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(delta) > 40) delta > 0 ? prev() : next();
+    touchStartX.current = null;
+  };
+
+  return (
+    <section className="bg-white py-12 md:py-16 border-b border-gray-100">
+      <div className="container-width">
+        <ScrollReveal animation="fade-up" className="mb-8 md:mb-10 text-center">
+          <div className="flex items-center justify-center gap-3">
+            <div className="w-1 h-8 bg-red-600 rounded-full" />
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Today at CKM</h2>
+            <div className="w-1 h-8 bg-red-600 rounded-full" />
+          </div>
+          <p className="mt-3 text-gray-600 max-w-xl mx-auto text-sm md:text-base">Health tips and education from our medical team to help you and your family stay well.</p>
+        </ScrollReveal>
+
+        <div
+          className="relative overflow-hidden rounded-3xl"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="flex transition-transform duration-700 ease-out" style={{ transform: `translateX(-${active * 100}%)` }}>
+            {healthSlides.map((slide) => {
+              const { Icon } = slide;
+              return (
+                <article key={slide.id} className={`relative w-full shrink-0 bg-gradient-to-br ${slide.gradient} px-6 py-10 md:px-12 md:py-14`}>
+                  <div className={`absolute top-0 left-0 h-1.5 w-full ${slide.accent}`} />
+                  <div className="mx-auto flex max-w-4xl flex-col items-center text-center md:flex-row md:items-center md:gap-10 md:text-left">
+                    <div className="mb-6 flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-white shadow-lg md:mb-0 md:h-32 md:w-32">
+                      <Icon className={`h-12 w-12 md:h-16 md:w-16 ${slide.tagText}`} />
+                    </div>
+                    <div className="max-w-2xl">
+                      <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${slide.tagBg} ${slide.tagText}`}>
+                        {slide.category}
+                      </span>
+                      <h3 className="mt-4 text-xl font-bold leading-snug text-gray-900 md:text-2xl lg:text-3xl">{slide.title}</h3>
+                      <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-base">{slide.description}</p>
+                      <Link
+                        to="/news"
+                        className={`mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-110 ${slide.accent}`}
+                      >
+                        Read Article <BookOpen className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          <button
+            onClick={prev}
+            className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-gray-700 shadow-md backdrop-blur-sm transition hover:bg-white hover:text-gray-900 md:left-4 md:h-12 md:w-12"
+            aria-label="Previous article"
+          >
+            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+          </button>
+          <button
+            onClick={next}
+            className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-gray-700 shadow-md backdrop-blur-sm transition hover:bg-white hover:text-gray-900 md:right-4 md:h-12 md:w-12"
+            aria-label="Next article"
+          >
+            <ChevronRightIcon className="h-5 w-5 md:h-6 md:w-6" />
+          </button>
+        </div>
+
+        <div className="mt-6 flex items-center justify-center gap-2">
+          {healthSlides.map((slide, index) => (
+            <button
+              key={slide.id}
+              onClick={() => goTo(index)}
+              className={`h-2.5 rounded-full transition-all ${index === active ? `w-8 ${healthSlides[active].accent}` : 'w-2.5 bg-gray-300 hover:bg-gray-400'}`}
+              aria-label={`Go to article ${index + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
