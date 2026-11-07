@@ -66,6 +66,12 @@ const translations: Record<string, { en: string; sw: string }> = {
   'home.help.visit': { en: 'Visit Us', sw: 'Kutembelea' },
   'home.help.respond': { en: 'We typically respond within 24 hours.', sw: 'Kwa kawaida tunajibu ndani ya saa 24.' },
 
+  // Health Tips section
+  'home.healthTips.badge': { en: 'Health Education', sw: 'Elimu ya Afya' },
+  'home.healthTips.title': { en: 'Health tips and education from our medical team to help you and your family stay well.', sw: 'Vidokezo vya afya na elimu kutoka kwa wataalamu wetu wa tiba kukusaidia wewe na familia yako kuwa na afya njema.' },
+  'home.healthTips.readArticle': { en: 'Read Article', sw: 'Soma Makala' },
+  'home.healthTips.viewAll': { en: 'View all tips', sw: 'Angalia vidokezo vyote' },
+
   // Departments page
   'departments.title': { en: 'Our Departments', sw: 'Idara Zetu' },
   'departments.subtitle': { en: 'Specialized care across every medical discipline.', sw: 'Huduma maalum katika kila taaluma ya matibabu.' },

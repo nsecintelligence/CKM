@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Users, Award, Activity, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, Video, BookOpen, Apple, Droplet, Baby, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, Activity, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, Video, BookOpen, Apple, Droplet, Baby, Brain, Syringe, Bug, Flower2, type LucideIcon } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide, FAQ, CKMTVVideo } from '../types';
 import ScrollReveal from '../components/ScrollReveal';
+import { useLanguage, type Language } from '../context/LanguageContext';
 import { HelpCircle, ChevronDown } from 'lucide-react';
 
 function getYouTubeEmbedUrl(url: string): string | null {
@@ -777,166 +778,251 @@ function FeaturedServices({ services }: { services: Service[] }) {
   );
 }
 
-type HealthSlide = {
+type HealthTip = {
   id: number;
-  category: string;
-  title: string;
-  description: string;
   Icon: LucideIcon;
   gradient: string;
   accent: string;
   tagBg: string;
   tagText: string;
-  iconBg: string;
+  cardGradient: string;
+  en: { category: string; title: string; description: string };
+  sw: { category: string; title: string; description: string };
 };
 
-const healthSlides: HealthSlide[] = [
+const healthTips: HealthTip[] = [
   {
     id: 1,
-    category: 'Heart Health',
-    title: '5 Ways to Lower Blood Pressure Naturally',
-    description: 'Simple lifestyle changes — from reducing sodium to staying active — can help keep your blood pressure in a healthy range and protect your heart long term.',
     Icon: HeartPulse,
     gradient: 'from-rose-50 via-white to-red-50',
     accent: 'bg-red-600',
     tagBg: 'bg-red-100',
     tagText: 'text-red-700',
-    iconBg: 'bg-red-600',
+    cardGradient: 'from-rose-600 via-red-700 to-rose-900',
+    en: { category: 'Heart Health', title: '5 Ways to Lower Blood Pressure Naturally', description: 'Simple lifestyle changes — from reducing sodium to staying active — can help keep your blood pressure in a healthy range and protect your heart long term.' },
+    sw: { category: 'Afya ya Moyo', title: 'Njia 5 za Kupunguza Shinikizo la Damu Kiasili', description: 'Mabadiliko rahisi ya maisha — kutoka kupunguza chumvi hadi kufanya mazoezi — yanaweza kusaidia kudumisha shinikizo la damu kwenye kiwango cha afya na kulinda moyo wako.' },
   },
   {
     id: 2,
-    category: 'Nutrition',
-    title: 'The Ultimate Guide to Balanced Meal Planning',
-    description: 'Build plates that nourish: learn how to combine proteins, whole grains, and fresh produce into affordable, balanced meals the whole family will enjoy.',
     Icon: Apple,
     gradient: 'from-emerald-50 via-white to-green-50',
     accent: 'bg-green-700',
     tagBg: 'bg-emerald-100',
     tagText: 'text-emerald-700',
-    iconBg: 'bg-green-700',
+    cardGradient: 'from-emerald-600 via-green-700 to-emerald-900',
+    en: { category: 'Nutrition', title: 'The Ultimate Guide to Balanced Meal Planning', description: 'Build plates that nourish: learn how to combine proteins, whole grains, and fresh produce into affordable, balanced meals the whole family will enjoy.' },
+    sw: { category: 'Lishe', title: 'Mwongozo Kamili wa Kupanga Mlo Wenye Usawa', description: 'Jenga sahani zinazolisha: jifunze jinsi ya kuunganisha protini, nafaka nzima, na matunda na mboga za kisasa katika mlo wa bei nafuu wenye usawa.' },
   },
   {
     id: 3,
-    category: 'Chronic Care',
-    title: 'Understanding Early Signs of Type 2 Diabetes',
-    description: 'Recognising the warning signs early — increased thirst, fatigue, blurred vision — makes a big difference. Learn what to watch for and when to get tested.',
     Icon: Droplet,
     gradient: 'from-sky-50 via-white to-blue-50',
     accent: 'bg-sky-600',
     tagBg: 'bg-sky-100',
     tagText: 'text-sky-700',
-    iconBg: 'bg-sky-600',
+    cardGradient: 'from-sky-500 via-blue-600 to-sky-900',
+    en: { category: 'Chronic Care', title: 'Understanding Early Signs of Type 2 Diabetes', description: 'Recognising the warning signs early — increased thirst, fatigue, blurred vision — makes a big difference. Learn what to watch for and when to get tested.' },
+    sw: { category: 'Huduma ya Muda Mrefu', title: 'Kuelewa Dalili za Mapema za Kisukari cha Aina 2', description: 'Kutambua ishara za onyo mapema — kiu, uchovu, kuona kwa shida — hufanya tofauti kubwa. Jifunze nini cha kutazama na lini kupimwa.' },
   },
   {
     id: 4,
-    category: 'Family Wellness',
-    title: 'Boosting Immunity: Foods Rich in Vitamin C',
-    description: 'Discover everyday foods packed with vitamin C that help strengthen your family’s immune system and keep colds and infections at bay all year round.',
     Icon: Baby,
     gradient: 'from-amber-50 via-white to-orange-50',
     accent: 'bg-amber-600',
     tagBg: 'bg-amber-100',
     tagText: 'text-amber-700',
-    iconBg: 'bg-amber-600',
+    cardGradient: 'from-amber-500 via-orange-600 to-amber-800',
+    en: { category: 'Family Wellness', title: 'Boosting Immunity: Foods Rich in Vitamin C', description: 'Discover everyday foods packed with vitamin C that help strengthen your family’s immune system and keep colds and infections at bay all year round.' },
+    sw: { category: 'Afya ya Familia', title: 'Kuimarisha Kinga: Vyakula Vyenye Vitamini C', description: 'Gundua vyakula vya kila siku vyenye vitamini C vinavyosaidia kuimarisha kinga ya mwili wa familia yako na kuzuia mafua na maambukizi.' },
+  },
+  {
+    id: 5,
+    Icon: ShieldCheck,
+    gradient: 'from-emerald-50 via-white to-teal-50',
+    accent: 'bg-teal-600',
+    tagBg: 'bg-teal-100',
+    tagText: 'text-teal-700',
+    cardGradient: 'from-teal-500 via-emerald-700 to-teal-900',
+    en: { category: 'Disease Prevention', title: 'Vaccines That Protect Your Family', description: 'Vaccines are safe, effective, and save lives. Learn which immunisations children and adults need, and why staying up to date protects the whole community.' },
+    sw: { category: 'Kuzuia Magonjwa', title: 'Chanjo Zinazolinda Familia Yako', description: 'Chanjo ni salama, madhubuti, na ziokoa maisha. Jifunze ni chanjo zipi watoto na watu wazima wanahitaji, na kwa nini kuzikamilisha hulinda jamii nzima.' },
+  },
+  {
+    id: 6,
+    Icon: Brain,
+    gradient: 'from-violet-50 via-white to-purple-50',
+    accent: 'bg-purple-600',
+    tagBg: 'bg-purple-100',
+    tagText: 'text-purple-700',
+    cardGradient: 'from-purple-500 via-indigo-600 to-purple-900',
+    en: { category: 'Mental Health', title: 'Managing Stress and Anxiety in Daily Life', description: 'Stress affects both mind and body. Explore simple, proven techniques — from mindful breathing to regular exercise — that help you stay calm and resilient.' },
+    sw: { category: 'Afya ya Akili', title: 'Kudhibiti Msongo wa Fikra na Wasiwasi Kila Siku', description: 'Msongo wa fikra huathiri akili na mwili. Gundua mbinu rahisi zilizothibitishwa — kutoka kupumua kwa makini hadi mazoezi — zinazokusaidia kutulia.' },
+  },
+  {
+    id: 7,
+    Icon: Bug,
+    gradient: 'from-lime-50 via-white to-green-50',
+    accent: 'bg-lime-600',
+    tagBg: 'bg-lime-100',
+    tagText: 'text-lime-700',
+    cardGradient: 'from-lime-500 via-green-600 to-lime-800',
+    en: { category: 'Infectious Diseases', title: 'Protecting Yourself from Malaria', description: 'Malaria is preventable and treatable. Discover how mosquito nets, repellents, and prompt testing can keep you and your children safe in endemic areas.' },
+    sw: { category: 'Magonjwa ya Kuambukizwa', title: 'Kulinda Nafsi yako dhidi ya Malaria', description: 'Malaria inaweza kuzuiwa na kutibiwa. Gundua jinsi vyandarua, dawa za kufuliza mbu, na upimaji wa haraka vinavyoweza kukulinda na watoto wako.' },
+  },
+  {
+    id: 8,
+    Icon: Flower2,
+    gradient: 'from-pink-50 via-white to-rose-50',
+    accent: 'bg-pink-600',
+    tagBg: 'bg-pink-100',
+    tagText: 'text-pink-700',
+    cardGradient: 'from-pink-500 via-rose-600 to-pink-900',
+    en: { category: 'Women’s Health', title: 'Antenatal Care: A Healthy Pregnancy Guide', description: 'Regular check-ups during pregnancy keep mother and baby safe. Learn what to expect at each visit, key warning signs, and how to prepare for delivery.' },
+    sw: { category: 'Afya ya Wanawake', title: 'Huduma ya Ujauzito: Mwongozo wa Mimba Salama', description: 'Uchunguzi wa kawaida wakati wa ujauzito hulinda mama na mtoto. Jifunze nini cha kutarajia kwenye kila ziara, ishara za hatari, na jinsi ya kujiandaa kwa kujifungua.' },
+  },
+  {
+    id: 9,
+    Icon: Syringe,
+    gradient: 'from-cyan-50 via-white to-sky-50',
+    accent: 'bg-cyan-600',
+    tagBg: 'bg-cyan-100',
+    tagText: 'text-cyan-700',
+    cardGradient: 'from-cyan-500 via-sky-600 to-cyan-900',
+    en: { category: 'Child Health', title: 'Immunisation Schedule Every Parent Should Know', description: 'Timely vaccinations protect children from serious diseases. Here’s a clear, age-by-age guide to the vaccines your child needs from birth to age five.' },
+    sw: { category: 'Afya ya Watoto', title: 'Ratiba ya Chanjo Kila Mzazi Anapaswa Kujua', description: 'Chanjo zinazofanywa wakati wake hulinda watoto dhidi ya magonjwa makali. Hapa kuna mwongozo wazi wa chanjo mtoto wako anahitaji kutoka kuzaliwa hadi miaka mitano.' },
+  },
+  {
+    id: 10,
+    Icon: Activity,
+    gradient: 'from-emerald-50 via-white to-green-50',
+    accent: 'bg-green-700',
+    tagBg: 'bg-emerald-100',
+    tagText: 'text-emerald-700',
+    cardGradient: 'from-green-600 via-emerald-700 to-green-900',
+    en: { category: 'Healthy Living', title: 'The Benefits of Daily Exercise for All Ages', description: 'Just 30 minutes of movement a day strengthens your heart, lifts your mood, and lowers disease risk. Find easy ways to stay active at any age.' },
+    sw: { category: 'Maisha ya Afya', title: 'Faida za Mazoezi ya Kila Siku kwa Kila Umri', description: 'Dakika 30 tu za mwili kila siku huimarisha moyo, kupandisha hisia, na kupunguza hatari ya magonjwa. Pata njia rahisi za kuwa na shughuli kwa kila umri.' },
   },
 ];
 
 function HealthEducationCarousel() {
-  const [active, setActive] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const touchStartX = useRef<number | null>(null);
-
-  const goTo = useCallback((index: number) => setActive((index + healthSlides.length) % healthSlides.length), []);
-  const next = useCallback(() => goTo(active + 1), [active, goTo]);
-  const prev = useCallback(() => goTo(active - 1), [active, goTo]);
+  const { language, t } = useLanguage();
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const mobileTrackRef = useRef<HTMLDivElement | null>(null);
+  const [desktopMotion, setDesktopMotion] = useState({ height: 0, travel: 0 });
+  const [translateX, setTranslateX] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    if (isPaused || healthSlides.length <= 1) return;
-    const interval = setInterval(() => setActive((prevIndex) => (prevIndex + 1) % healthSlides.length), 5000);
-    return () => clearInterval(interval);
-  }, [isPaused]);
+    const updateDesktopMotion = () => {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (window.innerWidth < 768 || prefersReducedMotion || !sectionRef.current || !trackRef.current) {
+        setDesktopMotion({ height: 0, travel: 0 });
+        setTranslateX(0);
+        return;
+      }
+      const travel = Math.max(trackRef.current.scrollWidth - window.innerWidth + 48, 0);
+      setDesktopMotion({ height: window.innerHeight + travel, travel });
+    };
 
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const delta = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(delta) > 40) delta > 0 ? prev() : next();
-    touchStartX.current = null;
+    updateDesktopMotion();
+    const observer = new ResizeObserver(updateDesktopMotion);
+    if (trackRef.current) observer.observe(trackRef.current);
+    window.addEventListener('resize', updateDesktopMotion);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateDesktopMotion);
+    };
+  }, [healthTips.length]);
+
+  useEffect(() => {
+    if (!desktopMotion.travel) return;
+    let frame = 0;
+    const updateProgress = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (!sectionRef.current) return;
+        const start = sectionRef.current.offsetTop;
+        const range = Math.max(desktopMotion.height - window.innerHeight, 1);
+        const progress = Math.min(Math.max((window.scrollY - start) / range, 0), 1);
+        setTranslateX(-desktopMotion.travel * progress);
+      });
+    };
+
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', updateProgress);
+    };
+  }, [desktopMotion]);
+
+  useEffect(() => {
+    const container = mobileTrackRef.current;
+    if (!container) return;
+    const updateActiveIndex = () => {
+      const cards = Array.from(container.children) as HTMLElement[];
+      if (cards.length === 0) return;
+      const nearestIndex = cards.reduce((closest, card, index) => {
+        const closestDistance = Math.abs(cards[closest].offsetLeft - container.scrollLeft);
+        const cardDistance = Math.abs(card.offsetLeft - container.scrollLeft);
+        return cardDistance < closestDistance ? index : closest;
+      }, 0);
+      setActiveIndex(nearestIndex);
+    };
+    container.addEventListener('scroll', updateActiveIndex, { passive: true });
+    return () => container.removeEventListener('scroll', updateActiveIndex);
+  }, [healthTips.length]);
+
+  const scrollToMobileCard = (index: number) => {
+    const container = mobileTrackRef.current;
+    const card = container?.children[index] as HTMLElement | undefined;
+    if (container && card) container.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+  };
+
+  const renderCard = (tip: HealthTip, mobile = false) => {
+    const { Icon } = tip;
+    const content = tip[language];
+    return (
+      <article key={tip.id} className={`${mobile ? 'w-[82vw] max-w-[340px] shrink-0 snap-start' : 'w-[min(340px,calc(100vw-48px))] shrink-0'} group relative aspect-[4/5] overflow-hidden rounded-[1.75rem] border border-white/15 bg-gradient-to-br ${tip.cardGradient} shadow-xl shadow-black/20 transition duration-500 hover:scale-[1.03] hover:border-white/40 hover:shadow-2xl`}>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/5" />
+        <div className="relative flex h-full flex-col justify-between p-5 text-white sm:p-6">
+          <div className="flex items-start justify-between gap-3">
+            <span className="rounded-full border border-white/25 bg-black/20 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/90 backdrop-blur-sm">{content.category}</span>
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/15 backdrop-blur-md"><Icon className="h-5 w-5" aria-hidden="true" /></div>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">{content.title}</h3>
+            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-white/80">{content.description}</p>
+            <Link to="/news" className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-gray-900 transition duration-300 hover:gap-3 hover:bg-white/90" aria-label={t('home.healthTips.readArticle')}>
+              {t('home.healthTips.readArticle')} <BookOpen className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </article>
+    );
   };
 
   return (
-    <section className="bg-white py-12 md:py-16 border-b border-gray-100">
-      <div className="container-width">
-        <ScrollReveal animation="fade-up" className="mb-8 md:mb-10 text-center">
-          <div className="flex items-center justify-center gap-3">
-            <div className="w-1 h-8 bg-red-600 rounded-full" />
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Today at CKM</h2>
-            <div className="w-1 h-8 bg-red-600 rounded-full" />
+    <section ref={sectionRef} className="relative overflow-hidden bg-gray-950 text-white md:overflow-visible" style={desktopMotion.height ? { height: `${desktopMotion.height}px` } : undefined}>
+      <div className={desktopMotion.height ? 'md:sticky md:top-0 md:flex md:h-screen md:items-center md:overflow-hidden' : ''}>
+        <div className="w-full py-16 md:py-0">
+          <div className="container-width">
+            <div className="mb-10 flex items-end justify-between gap-6 md:mb-12">
+              <div className="max-w-2xl">
+                <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> {t('home.healthTips.badge')}</span>
+                <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">{t('home.healthTips.title')}</h2>
+                <span className="mt-5 block h-1 w-16 rounded-full bg-emerald-400" />
+              </div>
+              <Link to="/news" className="hidden shrink-0 items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-emerald-400 hover:bg-emerald-400/10 md:inline-flex">{t('home.healthTips.viewAll')} <ArrowRight className="h-4 w-4" /></Link>
+            </div>
+            <div ref={mobileTrackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">{healthTips.map((tip) => renderCard(tip, true))}</div>
+            <div className="hidden md:block"><div ref={trackRef} className="flex gap-6 will-change-transform" style={{ transform: `translate3d(${translateX}px, 0, 0)` }}>{healthTips.map((tip) => renderCard(tip))}</div></div>
+            <div className="mt-6 flex items-center justify-between md:hidden">
+              <div className="flex items-center gap-2" aria-label={`Tip ${activeIndex + 1} of ${healthTips.length}`}>{healthTips.map((tip, index) => <button key={tip.id} type="button" onClick={() => scrollToMobileCard(index)} className={`h-2 rounded-full transition-all ${index === activeIndex ? 'w-7 bg-emerald-400' : 'w-2 bg-white/30'}`} aria-label={`Go to tip ${index + 1}`} />)}</div>
+              <div className="flex gap-2"><button type="button" onClick={() => scrollToMobileCard(Math.max(activeIndex - 1, 0))} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-emerald-400 hover:text-emerald-300 disabled:opacity-40" disabled={activeIndex === 0} aria-label="Previous tip"><ChevronLeft className="h-5 w-5" /></button><button type="button" onClick={() => scrollToMobileCard(Math.min(activeIndex + 1, healthTips.length - 1))} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-emerald-400 hover:text-emerald-300 disabled:opacity-40" disabled={activeIndex === healthTips.length - 1} aria-label="Next tip"><ChevronRightIcon className="h-5 w-5" /></button></div>
+            </div>
+            <div className="mt-8 flex justify-center md:hidden"><Link to="/news" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 hover:text-emerald-200">{t('home.healthTips.viewAll')} <ArrowRight className="h-4 w-4" /></Link></div>
           </div>
-          <p className="mt-3 text-gray-600 max-w-xl mx-auto text-sm md:text-base">Health tips and education from our medical team to help you and your family stay well.</p>
-        </ScrollReveal>
-
-        <div
-          className="relative overflow-hidden rounded-3xl"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          <div className="flex transition-transform duration-700 ease-out" style={{ transform: `translateX(-${active * 100}%)` }}>
-            {healthSlides.map((slide) => {
-              const { Icon } = slide;
-              return (
-                <article key={slide.id} className={`relative w-full shrink-0 bg-gradient-to-br ${slide.gradient} px-6 py-10 md:px-12 md:py-14`}>
-                  <div className={`absolute top-0 left-0 h-1.5 w-full ${slide.accent}`} />
-                  <div className="mx-auto flex max-w-4xl flex-col items-center text-center md:flex-row md:items-center md:gap-10 md:text-left">
-                    <div className="mb-6 flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-white shadow-lg md:mb-0 md:h-32 md:w-32">
-                      <Icon className={`h-12 w-12 md:h-16 md:w-16 ${slide.tagText}`} />
-                    </div>
-                    <div className="max-w-2xl">
-                      <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${slide.tagBg} ${slide.tagText}`}>
-                        {slide.category}
-                      </span>
-                      <h3 className="mt-4 text-xl font-bold leading-snug text-gray-900 md:text-2xl lg:text-3xl">{slide.title}</h3>
-                      <p className="mt-3 text-sm leading-relaxed text-gray-600 md:text-base">{slide.description}</p>
-                      <Link
-                        to="/news"
-                        className={`mt-6 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:brightness-110 ${slide.accent}`}
-                      >
-                        Read Article <BookOpen className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-
-          <button
-            onClick={prev}
-            className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-gray-700 shadow-md backdrop-blur-sm transition hover:bg-white hover:text-gray-900 md:left-4 md:h-12 md:w-12"
-            aria-label="Previous article"
-          >
-            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
-          </button>
-          <button
-            onClick={next}
-            className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-gray-700 shadow-md backdrop-blur-sm transition hover:bg-white hover:text-gray-900 md:right-4 md:h-12 md:w-12"
-            aria-label="Next article"
-          >
-            <ChevronRightIcon className="h-5 w-5 md:h-6 md:w-6" />
-          </button>
-        </div>
-
-        <div className="mt-6 flex items-center justify-center gap-2">
-          {healthSlides.map((slide, index) => (
-            <button
-              key={slide.id}
-              onClick={() => goTo(index)}
-              className={`h-2.5 rounded-full transition-all ${index === active ? `w-8 ${healthSlides[active].accent}` : 'w-2.5 bg-gray-300 hover:bg-gray-400'}`}
-              aria-label={`Go to article ${index + 1}`}
-            />
-          ))}
         </div>
       </div>
     </section>
