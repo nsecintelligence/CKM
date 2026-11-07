@@ -670,4 +670,304 @@ export const healthTopics: HealthTopic[] = [
       ],
     },
   },
+  {
+    id: 'heart-health',
+    icon: 'HeartPulse',
+    en: {
+      label: 'Heart Health',
+      keywords: ['heart', 'blood pressure', 'hypertension', 'cardiovascular', 'stroke', 'cholesterol', 'heart attack'],
+      summary: 'Your heart works every second of your life. Small, consistent lifestyle changes can lower your blood pressure, reduce cholesterol, and dramatically cut your risk of heart attack and stroke.',
+      sections: [
+        {
+          heading: 'Understanding Blood Pressure',
+          body: 'Blood pressure is the force of blood against your artery walls. A normal reading is below 120/80 mmHg. Hypertension (140/90 or higher) often has no symptoms but silently damages your heart, brain, kidneys, and eyes over years. Have your blood pressure checked at least once a year — more often if it runs in your family.',
+        },
+        {
+          heading: '5 Ways to Lower Blood Pressure Naturally',
+          body: '1) Reduce sodium — aim for less than one teaspoon of salt per day and avoid processed foods. 2) Stay active — 30 minutes of brisk walking, five days a week, strengthens the heart muscle. 3) Eat more potassium — bananas, spinach, and sweet potatoes help balance sodium. 4) Limit alcohol and quit smoking — both raise blood pressure and damage blood vessels. 5) Manage stress — deep breathing, meditation, and adequate sleep keep stress hormones in check.',
+        },
+        {
+          heading: 'Cholesterol and Heart Disease',
+          body: 'High cholesterol builds up as plaque in your arteries, narrowing them and increasing the risk of heart attack and stroke. A simple blood test checks your levels. Lower LDL ("bad") cholesterol by reducing saturated fats (fatty meat, butter, fried foods) and eating more soluble fiber (oats, beans, fruits). Regular exercise raises HDL ("good") cholesterol, which helps clear plaque.',
+        },
+        {
+          heading: 'Heart Attack Warning Signs',
+          body: 'Chest pain or pressure that may spread to the arm, jaw, neck, or back. Shortness of breath, nausea, cold sweat, or sudden dizziness. Women may experience subtler symptoms like unusual fatigue, nausea, or jaw pain. If you or someone near you has these signs, call emergency services immediately — every minute matters.',
+        },
+        {
+          heading: 'Protecting Your Heart Long Term',
+          body: 'Heart health is built over a lifetime. Maintain a healthy weight, eat a balanced diet rich in fruits, vegetables, and whole grains, exercise regularly, avoid tobacco, limit alcohol, and take prescribed medications consistently. Annual check-ups that include blood pressure, blood sugar, and cholesterol tests catch problems early when they are most treatable.',
+        },
+      ],
+      prevention: [
+        'Reduce salt to less than one teaspoon per day',
+        'Exercise at least 30 minutes, 5 days a week',
+        'Eat plenty of fruits, vegetables, and whole grains',
+        'Avoid tobacco and limit alcohol',
+        'Check blood pressure, sugar, and cholesterol annually',
+        'Take prescribed heart medications consistently',
+        'Manage stress and get 7–9 hours of sleep',
+      ],
+    },
+    sw: {
+      label: 'Afya ya Moyo',
+      keywords: ['moyo', 'shinikizo la damu', 'magonjwa ya moyo', 'kolesteroli', 'kiharusi'],
+      summary: 'Moyo wako unafanya kazi kila sekunde ya maisha yako. Mabadiliko madogo na ya kudumu ya maisha yanaweza kupunguza shinikizo la damu, kupunguza kolesteroli, na kupunguza sana hatari ya heart attack na kiharusi.',
+      sections: [
+        {
+          heading: 'Kuelewa Shinikizo la Damu',
+          body: 'Shinikizo la damu ni nguvu ya damu kwenye kuta za mishipa. Kipimo cha kawaida ni chini ya 120/80 mmHg. Shinikizo la juu (140/90 au zaidi) mara nyingi halina dalili lakini huharibu moyo, ubongo, figo, na macho polepole kwa miaka. Pimwa angalau mara moja kwa mwaka — mara nyingi zaidi ikiwa ipo katika familia yako.',
+        },
+        {
+          heading: 'Njia 5 za Kupunguza Shinikizo la Damu Kiasili',
+          body: '1) Punguza chumvi — lengo la chini ya kijiko kimoja kwa siku na epuka vyakula vilivyosindikwa. 2) Kuwa mchangamfu — dakika 30 za kutembea kwa haraka, siku 5 kwa wiki, huimarisha misuli ya moyo. 3) Kula chumvi nyingi za kaliamu — ndizi, mchicha, na viazi vitamu husaidia usawa wa chumvi. 4) Punguza pombe na acha sigara — zote huongeza shinikizo na kuharibu mishipa. 5) Dhibiti msongo — kupumua kwa kina, dhana, na usingizi wa kutosha.',
+        },
+        {
+          heading: 'Kolesteroli na Magonjwa ya Moyo',
+          body: 'Kolesteroli ya juu hujiliza kama mchanga kwenye mishipa, hupunguza nafasi na kuongeza hatari ya heart attack na kiharusi. Kipimo rahisi cha damu huangalia viwango. Punguza LDL ("mbaya") kwa kupunguza mafuta yaliyoshindwa (nyama yenye mafuta, siagi, vyakula vilivyokaangwa) na kula nyuzi nyingi (ngano, maharage, matunda). Mazoezi huongeza HDL ("nzuri") inayosaidia kuondoa mchanga.',
+        },
+        {
+          heading: 'Ishara za Onyo za Heart Attack',
+          body: 'Maumivu au shinikizo la kifua ambayo yanaweza kuenea kwenda mkono, taya, shingo, au mgongo. Upungufu wa pumua, kichefuchefu, jasho baridi, au kizunguzungu cha ghafla. Wanawake wanaweza kupata dalili nyepesi kama uchovu usio wa kawaida, kichefuchefu, au maumivu ya taya. Ikiwa wewe au mtu karibu nawo ana ishara hizi, piga simu ya dharura mara moja — kila dakika ni muhimu.',
+        },
+        {
+          heading: 'Kulinda Moyo wako Kwa Muda Mrefu',
+          body: 'Afya ya moyo hujengwa kwa maisha yote. Endeleza uzito wa afya, kula chakula bora chenye matunda, mboga, na nafaka nzima, fanya mazoezi ya kawaida, epuka tumbaku, punguza pombe, na chukua dawa zilizoagizwa kwa uthabiti. Uchunguzi wa kila mwaka unaopima shinikizo la damu, sukari, na kolesteroli unagundua matatizo mapema.',
+        },
+      ],
+      prevention: [
+        'Punguza chumvi hadi chini ya kijiko kimoja kwa siku',
+        'Fanya mazoezi angalau dakika 30, siku 5 kwa wiki',
+        'Kula matunda, mboga, na nafaka nzima nyingi',
+        'Epuka tumbaku na punguza pombe',
+        'Pima shinikizo la damu, sukari, na kolesteroli kila mwaka',
+        'Chukua dawa za moyo zilizoagizwa kwa uthabiti',
+        'Dhibiti msongo na lala saa 7-9',
+      ],
+    },
+  },
+  {
+    id: 'mental-health',
+    icon: 'Brain',
+    en: {
+      label: 'Mental Health',
+      keywords: ['mental health', 'depression', 'anxiety', 'stress', 'counseling', 'psychological', 'emotional', 'panic'],
+      summary: 'Mental health is just as important as physical health. Stress, anxiety, and depression are common, treatable conditions. Seeking help early leads to faster recovery and a fuller life.',
+      sections: [
+        {
+          heading: 'Understanding Stress',
+          body: 'Stress is your body\'s natural response to pressure. Short bursts can help you perform, but chronic stress harms both mind and body — raising blood pressure, weakening immunity, disrupting sleep, and causing irritability. Recognising your stress triggers is the first step to managing them.',
+        },
+        {
+          heading: 'Managing Stress and Anxiety in Daily Life',
+          body: 'Simple, proven techniques help: 1) Deep breathing — inhale for 4 seconds, hold for 4, exhale for 6. 2) Regular exercise — even a 20-minute walk releases mood-boosting endorphins. 3) Mindful breaks — step away from screens and tasks for 5 minutes every hour. 4) Connection — talk to a trusted friend or family member. 5) Routine — consistent sleep, meals, and activity create stability.',
+        },
+        {
+          heading: 'Recognising Depression',
+          body: 'Depression is more than feeling sad. Signs include persistent low mood for 2+ weeks, loss of interest in activities you used to enjoy, changes in appetite or sleep, fatigue, difficulty concentrating, feelings of worthlessness, and thoughts of self-harm. Depression is a medical condition, not a weakness, and it responds well to treatment.',
+        },
+        {
+          heading: 'When to Seek Professional Help',
+          body: 'See a healthcare provider if symptoms last more than two weeks, interfere with daily life, or include thoughts of self-harm. Treatment may include counseling (talk therapy), medication, or both. Our clinic offers confidential mental health services. There is no shame in asking for help — it is a sign of strength.',
+        },
+        {
+          heading: 'Supporting Someone with Mental Illness',
+          body: 'Listen without judgement. Avoid saying "just snap out of it." Encourage them to seek professional help and offer to accompany them. Check in regularly. Learn about their condition. In a crisis, stay with them and call emergency services or a mental health helpline immediately.',
+        },
+      ],
+      prevention: [
+        'Maintain a regular sleep schedule of 7–9 hours',
+        'Exercise regularly to boost mood and reduce tension',
+        'Stay connected with family and friends',
+        'Practice deep breathing or meditation daily',
+        'Limit alcohol and avoid recreational drugs',
+        'Take breaks and avoid prolonged work stress',
+        'Seek help early — do not wait until things feel overwhelming',
+      ],
+    },
+    sw: {
+      label: 'Afya ya Akili',
+      keywords: ['afya ya akili', 'unyogovu', 'wasiwasi', 'msongo wa fikra', 'ushauri', 'hofu'],
+      summary: 'Afya ya akili ni muhimu kama afya ya mwili. Msongo wa fikra, wasiwasi, na unyogovu ni magonjwa ya kawaida yanayotibika. Kutafuta msaada mapema huongeza kupona haraka na maisha mazuri zaidi.',
+      sections: [
+        {
+          heading: 'Kuelewa Msongo wa Fikra',
+          body: 'Msongo wa fikra ni mwitikio wa asili wa mwili kwa shinikizo. Miblasto ya muda mfupi inaweza kusaidia, lakini msongo wa muda mrefu huharibu akili na mwili — kuongeza shinikizo la damu, kupunguza kinga, kuharibu usingizi, na kusababisha hasira. Kutambua visababishi vyako ni hatua ya kwanza.',
+        },
+        {
+          heading: 'Kudhibiti Msongo na Wasiwasi Kila Siku',
+          body: 'Mbinu rahisi zilizothibitishwa: 1) Kupumua kwa kina — pumua kwa sekunde 4, shikilia kwa 4, toa kwa 6. 2) Mazoezi ya kawaida — hata kutembea dakika 20 huachisha endorphini. 3) Pumzika — achisha skrini na kazi kwa dakika 5 kila saa. 4) Mawasiliano — zungumza na rafiki au jamaa wa kuaminika. 5) Ratiba — usingizi, milo, na shughuli zinazolingana.',
+        },
+        {
+          heading: 'Kutambua Unyogovu',
+          body: 'Unyogovu ni zaidi ya kuhisi huzuni. Dalili ni pamoja na huzuni ya kudumu kwa zaidi ya wiki 2, kupoteza hamu ya shughuli, mabadiliko ya hamu ya chakula au usingizi, uchovu, shida ya kuzingatia, hisia za kutokuwa na thamani, na mawazo ya kujidhuru. Unyogovu ni ugonjwa wa kitabibu, sio udhaifu, na unajibu vizuri kwa matibabu.',
+        },
+        {
+          heading: 'Lini ya Kutafuta Msaada wa Kitaalamu',
+          body: 'Muone mtoa hudwa ya afya ikiwa dalili zinaendelea zaidi ya wiki mbili, zinakatiza maisha ya kila siku, au zinajumuisha mawazo ya kujidhuru. Matibabu yanaweza kujumuisha ushauri, dawa, au vyote. Kliniki yetu inatoa huduma za afya ya akili kwa siri. Hakuna aibu ya kuomba msaada — ni ishara ya nguvu.',
+        },
+        {
+          heading: 'Kusaidia Mtu mwenye Ugonjwa wa Akili',
+          body: 'Sikiliza bila kuhukumu. Epuka kusema "jipange tu." Mshauri atafute msaada wa kitaalamu na mtumie pamoja. Angalia mara kwa mara. Jifunze kuhusu ugonjwa wake. Katika dharura, kaa naye na upige simu ya dharura mara moja.',
+        },
+      ],
+      prevention: [
+        'Dumisha ratiba ya usingizi wa saa 7-9',
+        'Fanya mazoezi ya kawaida kupandisha hisia',
+        'Endelea kuwasiliana na familia na marafiki',
+        'Fanya mazoezi ya kupumua kwa kina au dhana kila siku',
+        'Punguza pombe na epuka dawa za kiburudani',
+        'Pumzika na epuka msongo wa kazi wa muda mrefu',
+        'Tafuta msaada mapema — usisubiri hadi mambo yawa magumu',
+      ],
+    },
+  },
+  {
+    id: 'child-immunisation',
+    icon: 'Syringe',
+    en: {
+      label: 'Child Immunisation',
+      keywords: ['immunisation', 'vaccination', 'vaccine', 'children', 'baby', 'bcg', 'polio', 'measles', 'schedule'],
+      summary: 'Timely vaccinations protect your child from serious, preventable diseases. Following the immunisation schedule from birth gives your child the strongest protection at the right time.',
+      sections: [
+        {
+          heading: 'Why Vaccines Matter',
+          body: 'Vaccines train your child\'s immune system to fight diseases before they strike. They are safe, rigorously tested, and save millions of lives every year. Children who are fully vaccinated are protected from diseases that once caused disability and death, including polio, measles, and tetanus.',
+        },
+        {
+          heading: 'Birth to 2 Months',
+          body: 'BCG (protects against severe TB) — given at birth or first contact. Polio (OPV-0) — given at birth. Hepatitis B (birth dose) — given within 24 hours of birth. These early vaccines start building protection before the baby leaves the health facility.',
+        },
+        {
+          heading: '6, 10, and 14 Weeks',
+          body: 'At each of these visits your child receives: polio drops (OPV-1, OPV-2, OPV-3), pentavalent vaccine (DPT, Hepatitis B, Hib — protects against diphtheria, whooping cough, tetanus, hepatitis B, and Hib), pneumococcal vaccine (protects against pneumonia and meningitis), and rotavirus vaccine (protects against severe diarrhea).',
+        },
+        {
+          heading: '9 Months',
+          body: 'Measles vaccine (MR-1) — protects against measles and rubella. Measles is highly contagious and can cause pneumonia, brain damage, and death. The first dose is given at 9 months, with a second dose (MR-2) at 18 months for full protection.',
+        },
+        {
+          heading: 'Keep a Vaccination Record',
+          body: 'Always carry your child\'s vaccination card to every visit. It helps health workers track which vaccines have been given and which are due. If you miss an appointment, come as soon as possible — vaccines can still be given as catch-up doses. Never skip a vaccine without medical advice.',
+        },
+      ],
+      prevention: [
+        'Follow the full immunisation schedule from birth',
+        'Always bring the vaccination card to every visit',
+        'Never skip a vaccine without consulting a health worker',
+        'If you miss an appointment, come for catch-up doses',
+        'Complete all booster doses at 18 months and beyond',
+        'Ask your health worker about any vaccine side effects',
+      ],
+    },
+    sw: {
+      label: 'Chanjo za Watoto',
+      keywords: ['chanjo', 'watoto', 'mtoto', 'bcg', 'polio', 'surua', 'ratiba'],
+      summary: 'Chanjo zinazofanywa wakati wake hulinda mtoto wako dhidi ya magonjwa makali yanayoweza kuzuiwa. Kufuata ratiba ya chanjo tangu kuzaliwa humpa mtoto ulinzi mkubwa zaidi kwa wakati unaofaa.',
+      sections: [
+        {
+          heading: 'Kwa Nini Chanjo ni Muhimu',
+          body: 'Chanjo hufunza mfumo wa kinga wa mtoto wako kupambana na magonjwa kabla hayajashambulia. Ni salama, zimejaribiwa kwa ukali, na ziokoa maisha milioni kila mwaka. Watoto waliokamilisha chanjo wanalindwa dhidi ya magonjwa yaliokuwa yakisababisha ulemavu na kifo, ikijumuisha polio, surua, na tetanasi.',
+        },
+        {
+          heading: 'Kuzaliwa hadi Miezi 2',
+          body: 'BCG (hudhania TB ya hatari) — inatolewa kuzaliwa au ziara ya kwanza. Polio (OPV-0) — inatolewa kuzaliwa. Homa ya ini B (dozi ya kuzaliwa) — ndani ya saa 24 baada ya kuzaliwa. Chanjo hizi za mapema huanza kujenga kinga kabla mtoto hajatoka kituo cha afya.',
+        },
+        {
+          heading: 'Wiki 6, 10, na 14',
+          body: 'Kwenye kila ziara mtoto wako anapata: matone ya polio (OPV-1, OPV-2, OPV-3), chanjo ya pentavalent (DPT, Homa ya ini B, Hib — hudhania diphtheria, kikohozi cha mbwa, tetanasi, homa ya ini B, na Hib), chanjo ya pneumococcal (hudhania nimonia na meninjaitisi), na chanjo ya rotavirus (hudhania kuhara kali).',
+        },
+        {
+          heading: 'Miezi 9',
+          body: 'Chanjo ya Surua (MR-1) — hudhania surua na rubella. Surua inaambukiza sana na inaweza kusababisha nimonia, uharibifu wa ubongo, na kifo. Dozi ya kwanza inatolewa miezi 9, na dozi ya pili (MR-2) miezi 18 kwa ulinzi kamili.',
+        },
+        {
+          heading: 'Hifadhi Kadi ya Chanjo',
+          body: 'Daima bebaka kadi ya chanjo ya mtoto wako kila ziara. Inasaidia wafanyakazi wa afya kufuata ni chanjo zipi zilizotolewa na zipi zinazopaswa kufanywa. Ukiacha ziara, kuja haraka iwezekanavyo — chanjo inaweza kutolewa kama dozi za kukamilisha. Kamwe usiruke chanjo bila ushauri wa kitabibu.',
+        },
+      ],
+      prevention: [
+        'Fuata ratiba kamili ya chanjo tangu kuzaliwa',
+        'Daima peleka kadi ya chanjo kwenye kila ziara',
+        'Kamwe usiruke chanjo bila kushauriana na mfanyakazi wa afya',
+        'Ukiacha ziara, kuja kwa dozi za kukamilisha',
+        'Kamilisha dozi zote za nyongeza miezi 18 na zaidi',
+        'Uliza mfanyakazi wa afya kuhusu madhara yoyote ya chanjo',
+      ],
+    },
+  },
+  {
+    id: 'daily-exercise',
+    icon: 'Activity',
+    en: {
+      label: 'Healthy Living',
+      keywords: ['exercise', 'physical activity', 'fitness', 'active', 'walking', 'healthy lifestyle'],
+      summary: 'Just 30 minutes of movement a day strengthens your heart, lifts your mood, and lowers your risk of chronic disease. Staying active is one of the most powerful things you can do for your health at any age.',
+      sections: [
+        {
+          heading: 'Why Daily Exercise Matters',
+          body: 'Regular physical activity reduces your risk of heart disease, stroke, type 2 diabetes, and several cancers. It strengthens bones and muscles, improves mental health and mood, boosts energy, and helps you maintain a healthy weight. The World Health Organization recommends at least 150 minutes of moderate activity per week — just over 20 minutes a day.',
+        },
+        {
+          heading: 'Easy Ways to Stay Active',
+          body: 'You do not need a gym. Walk briskly for 30 minutes — to work, to the market, or around your neighbourhood. Take the stairs instead of the lift. Dance, garden, or play with your children. Cycle or swim if you can. Every bit of movement counts, and short bursts throughout the day add up.',
+        },
+        {
+          heading: 'Exercise for Children and Teens',
+          body: 'Children and adolescents aged 5–17 should get at least 60 minutes of moderate to vigorous activity daily — running, jumping, playing football, or cycling. Active children build stronger bones and muscles, concentrate better in school, and are less likely to become overweight. Limit screen time and encourage outdoor play.',
+        },
+        {
+          heading: 'Exercise for Older Adults',
+          body: 'Adults over 65 should aim for 150 minutes of moderate activity weekly, plus muscle-strengthening and balance exercises twice a week. Walking, gentle stretching, and light resistance training reduce the risk of falls, keep joints mobile, and preserve independence. Always start slowly and consult a doctor if you have a chronic condition.',
+        },
+        {
+          heading: 'Staying Safe While Exercising',
+          body: 'Warm up for 5–10 minutes before activity and cool down afterwards. Drink plenty of water, especially in hot weather. Wear comfortable shoes and clothing. Stop and rest if you feel chest pain, dizziness, or severe shortness of breath. Start slowly if you are new to exercise and build up gradually to avoid injury.',
+        },
+      ],
+      prevention: [
+        'Aim for at least 30 minutes of activity, 5 days a week',
+        'Walk whenever you can — every step counts',
+        'Limit sitting time — stand and move every hour',
+        'Children need at least 60 minutes of active play daily',
+        'Warm up and cool down to prevent injury',
+        'Drink water and exercise during cooler hours in hot weather',
+      ],
+    },
+    sw: {
+      label: 'Maisha ya Afya',
+      keywords: ['mazoezi', 'shughuli ya mwili', 'afya', 'kutembea', 'maisha ya afya'],
+      summary: 'Dakika 30 tu za mwili kila siku huimarisha moyo wako, kupandisha hisia, na kupunguza hatari ya magonjwa ya muda mrefu. Kuwa mchangamfu ni moja ya vitu vyenye nguvu zaidi unavyoweza kufanya kwa afya yako kwa kila umri.',
+      sections: [
+        {
+          heading: 'Kwa Nini Mazoezi ya Kila Siku ni Muhimu',
+          body: 'Shughuli ya kawaida ya mwili inapunguza hatari ya magonjwa ya moyo, kiharusi, kisukari cha aina 2, na saratani kadhaa. Huimarisha mifupa na misuli, huboresha afya ya akili na hisia, huongeza nguvu, na husaidia kudumisha uzito wa afya. Shirika la Afya la Dunia linashauri angalau dakika 150 za shughuli ya wastani kwa wiki — zaidi ya dakika 20 kwa siku.',
+        },
+        {
+          heading: 'Njia Rahisi za Kuwa Mchangamfu',
+          body: 'Huhitaji gym. Tembea kwa haraka kwa dakika 30 — kwenda kazini, sokoni, au eneo lako. Tumia ngazi badala ya lifti. Cheza, lima shamba, au cheza na watoto wako. Panda baiskeli au ogopea ukiweza. Kila mwendo unahesabu, na vipindi vifupi vinajumlisha.',
+        },
+        {
+          heading: 'Mazoezi kwa Watoto na Vijana',
+          body: 'Watoto na vijana wenye umri wa miaka 5-17 wanapaswa kupata angalau dakika 60 za shughuli ya kawaida hadi ya haraka kila siku — kukimbia, kuruka, kucheza mpira, au kupanda baiskeli. Watoto wenye shughuli hujenga mifupa na misuli imara, wanazingatia vizuri shuleni, na hawapati uzito kupita kiasi. Punguza muda wa skrini na uhimizie mchezo wa nje.',
+        },
+        {
+          heading: 'Mazoezi kwa Watu Wazima Zaidi ya Miaka 65',
+          body: 'Watu wazima zaidi ya miaka 65 wanapaswa kulenga dakika 150 za shughuli ya wastani kwa wiki, pamoja na mazoezi ya kuimarisha misuli na usawazishaji mara mbili kwa wiki. Kutembea, kunyoosha mwili kwa upole, na mazoezi ya upinzani mwepesi hupunguza hatari ya kuanguka, kudumisha maungo, na kuhifadhi uhuru wa kibinafsi. Anza polepole na muone daktari ukiwa na ugonjwa wa muda mrefu.',
+        },
+        {
+          heading: 'Usalama wakati wa Mazoezi',
+          body: 'Jipashe kwa dakika 5-10 kabla ya shughuli na baridi baadaye. Kunywa maji mengi, hasa katika joto kali. Vaa viatu na nguo zinazofaa. Simama na pumzika ukihisi maumivu ya kifua, kizunguzungu, au kupumua kwa shida. Anza polepole ukiwa mgeni wa mazoezi na ongeza taratibu kuepuka majeraha.',
+        },
+      ],
+      prevention: [
+        'Lenga angalau dakika 30 za shughuli, siku 5 kwa wiki',
+        'Tembea popote unapoweza — kila hatua inahesabu',
+        'Punguza muda wa kukaa — simama na tembea kila saa',
+        'Watoto wanahitaji angalau dakika 60 za mchezo kwa siku',
+        'Jipashe na upoeze kuzuia majeraha',
+        'Kunywa maji na fanya mazoezi wakati wa baridi katika joto kali',
+      ],
+    },
+  },
 ];

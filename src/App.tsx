@@ -7,6 +7,7 @@ import Departments from './pages/Departments';
 import Gallery from './pages/Gallery';
 import News from './pages/News';
 import NewsDetail from './pages/NewsDetail';
+import HealthTopicDetail from './pages/HealthTopicDetail';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
 import Clinic from './pages/Clinic';
@@ -56,6 +57,7 @@ function App() {
           <Route path="gallery" element={<Gallery />} />
           <Route path="news" element={<News />} />
           <Route path="news/:id" element={<NewsDetail />} />
+          <Route path="health-topic/:topicId" element={<HealthTopicDetail />} />
           <Route path="faq" element={<FAQ />} />
           <Route path="contact" element={<Contact />} />
           <Route path="clinic" element={<Clinic />} />

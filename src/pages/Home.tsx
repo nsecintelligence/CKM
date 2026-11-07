@@ -780,6 +780,7 @@ function FeaturedServices({ services }: { services: Service[] }) {
 
 type HealthTip = {
   id: number;
+  topicId: string;
   Icon: LucideIcon;
   gradient: string;
   accent: string;
@@ -793,6 +794,7 @@ type HealthTip = {
 const healthTips: HealthTip[] = [
   {
     id: 1,
+    topicId: 'heart-health',
     Icon: HeartPulse,
     gradient: 'from-rose-50 via-white to-red-50',
     accent: 'bg-red-600',
@@ -804,6 +806,7 @@ const healthTips: HealthTip[] = [
   },
   {
     id: 2,
+    topicId: 'nutrition',
     Icon: Apple,
     gradient: 'from-emerald-50 via-white to-green-50',
     accent: 'bg-green-700',
@@ -815,6 +818,7 @@ const healthTips: HealthTip[] = [
   },
   {
     id: 3,
+    topicId: 'blood-pressure',
     Icon: Droplet,
     gradient: 'from-sky-50 via-white to-blue-50',
     accent: 'bg-sky-600',
@@ -826,6 +830,7 @@ const healthTips: HealthTip[] = [
   },
   {
     id: 4,
+    topicId: 'disease-prevention',
     Icon: Baby,
     gradient: 'from-amber-50 via-white to-orange-50',
     accent: 'bg-amber-600',
@@ -837,6 +842,7 @@ const healthTips: HealthTip[] = [
   },
   {
     id: 5,
+    topicId: 'disease-prevention',
     Icon: ShieldCheck,
     gradient: 'from-emerald-50 via-white to-teal-50',
     accent: 'bg-teal-600',
@@ -848,6 +854,7 @@ const healthTips: HealthTip[] = [
   },
   {
     id: 6,
+    topicId: 'mental-health',
     Icon: Brain,
     gradient: 'from-violet-50 via-white to-purple-50',
     accent: 'bg-purple-600',
@@ -859,6 +866,7 @@ const healthTips: HealthTip[] = [
   },
   {
     id: 7,
+    topicId: 'infectious-diseases',
     Icon: Bug,
     gradient: 'from-lime-50 via-white to-green-50',
     accent: 'bg-lime-600',
@@ -870,6 +878,7 @@ const healthTips: HealthTip[] = [
   },
   {
     id: 8,
+    topicId: 'womens-health',
     Icon: Flower2,
     gradient: 'from-pink-50 via-white to-rose-50',
     accent: 'bg-pink-600',
@@ -881,6 +890,7 @@ const healthTips: HealthTip[] = [
   },
   {
     id: 9,
+    topicId: 'child-immunisation',
     Icon: Syringe,
     gradient: 'from-cyan-50 via-white to-sky-50',
     accent: 'bg-cyan-600',
@@ -892,6 +902,7 @@ const healthTips: HealthTip[] = [
   },
   {
     id: 10,
+    topicId: 'daily-exercise',
     Icon: Activity,
     gradient: 'from-emerald-50 via-white to-green-50',
     accent: 'bg-green-700',
@@ -993,7 +1004,7 @@ function HealthEducationCarousel() {
           <div>
             <h3 className="text-xl font-bold leading-tight tracking-tight sm:text-2xl">{content.title}</h3>
             <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-white/80">{content.description}</p>
-            <Link to="/news" className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-gray-900 transition duration-300 hover:gap-3 hover:bg-white/90" aria-label={t('home.healthTips.readArticle')}>
+            <Link to={`/health-topic/${tip.topicId}`} className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-gray-900 transition duration-300 hover:gap-3 hover:bg-white/90" aria-label={t('home.healthTips.readArticle')}>
               {t('home.healthTips.readArticle')} <BookOpen className="h-4 w-4" />
             </Link>
           </div>
@@ -1005,23 +1016,25 @@ function HealthEducationCarousel() {
   return (
     <section ref={sectionRef} className="relative overflow-hidden bg-gray-950 text-white md:overflow-visible" style={desktopMotion.height ? { height: `${desktopMotion.height}px` } : undefined}>
       <div className={desktopMotion.height ? 'md:sticky md:top-0 md:flex md:h-screen md:items-center md:overflow-hidden' : ''}>
-        <div className="w-full py-16 md:py-0">
+        <div className="w-full py-10 md:py-0">
           <div className="container-width">
-            <div className="mb-10 flex items-end justify-between gap-6 md:mb-12">
+            <div className="mb-6 flex items-end justify-between gap-4 md:mb-12 md:gap-6">
               <div className="max-w-2xl">
                 <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> {t('home.healthTips.badge')}</span>
-                <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">{t('home.healthTips.title')}</h2>
-                <span className="mt-5 block h-1 w-16 rounded-full bg-emerald-400" />
+                <h2 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl md:mt-4 md:text-5xl">{t('home.healthTips.title')}</h2>
+                <span className="mt-4 block h-1 w-16 rounded-full bg-emerald-400 md:mt-5" />
               </div>
               <Link to="/news" className="hidden shrink-0 items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:border-emerald-400 hover:bg-emerald-400/10 md:inline-flex">{t('home.healthTips.viewAll')} <ArrowRight className="h-4 w-4" /></Link>
             </div>
-            <div ref={mobileTrackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden">{healthTips.map((tip) => renderCard(tip, true))}</div>
+            <ScrollReveal animation="fade-up" className="md:hidden">
+              <div ref={mobileTrackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{healthTips.map((tip) => renderCard(tip, true))}</div>
+            </ScrollReveal>
             <div className="hidden md:block"><div ref={trackRef} className="flex gap-6 will-change-transform" style={{ transform: `translate3d(${translateX}px, 0, 0)` }}>{healthTips.map((tip) => renderCard(tip))}</div></div>
-            <div className="mt-6 flex items-center justify-between md:hidden">
+            <div className="mt-5 flex items-center justify-between md:hidden">
               <div className="flex items-center gap-2" aria-label={`Tip ${activeIndex + 1} of ${healthTips.length}`}>{healthTips.map((tip, index) => <button key={tip.id} type="button" onClick={() => scrollToMobileCard(index)} className={`h-2 rounded-full transition-all ${index === activeIndex ? 'w-7 bg-emerald-400' : 'w-2 bg-white/30'}`} aria-label={`Go to tip ${index + 1}`} />)}</div>
               <div className="flex gap-2"><button type="button" onClick={() => scrollToMobileCard(Math.max(activeIndex - 1, 0))} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-emerald-400 hover:text-emerald-300 disabled:opacity-40" disabled={activeIndex === 0} aria-label="Previous tip"><ChevronLeft className="h-5 w-5" /></button><button type="button" onClick={() => scrollToMobileCard(Math.min(activeIndex + 1, healthTips.length - 1))} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-emerald-400 hover:text-emerald-300 disabled:opacity-40" disabled={activeIndex === healthTips.length - 1} aria-label="Next tip"><ChevronRightIcon className="h-5 w-5" /></button></div>
             </div>
-            <div className="mt-8 flex justify-center md:hidden"><Link to="/news" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 hover:text-emerald-200">{t('home.healthTips.viewAll')} <ArrowRight className="h-4 w-4" /></Link></div>
+            <div className="mt-6 flex justify-center md:hidden"><Link to="/news" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 hover:text-emerald-200">{t('home.healthTips.viewAll')} <ArrowRight className="h-4 w-4" /></Link></div>
           </div>
         </div>
       </div>

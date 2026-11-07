@@ -72,6 +72,14 @@ const translations: Record<string, { en: string; sw: string }> = {
   'home.healthTips.readArticle': { en: 'Read Article', sw: 'Soma Makala' },
   'home.healthTips.viewAll': { en: 'View all tips', sw: 'Angalia vidokezo vyote' },
 
+  // Health topic article page
+  'healthTopic.back': { en: 'Back to Home', sw: 'Rudi Nyumbani' },
+  'healthTopic.summary': { en: 'Overview', sw: 'Muhtasari' },
+  'healthTopic.prevention': { en: 'Prevention Tips', sw: 'Vidokezo vya Kuzuia' },
+  'healthTopic.relatedTips': { en: 'More Health Tips', sw: 'Vidokezo Zaidi vya Afya' },
+  'healthTopic.notFound': { en: 'Article Not Found', sw: 'Makala Haijapatikana' },
+  'healthTopic.notFoundDesc': { en: 'The health topic you are looking for does not exist.', sw: 'Mada ya afya unayotafuta haipo.' },
+
   // Departments page
   'departments.title': { en: 'Our Departments', sw: 'Idara Zetu' },
   'departments.subtitle': { en: 'Specialized care across every medical discipline.', sw: 'Huduma maalum katika kila taaluma ya matibabu.' },
