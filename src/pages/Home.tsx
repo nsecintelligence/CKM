@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Users, Award, Activity, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, Video, BookOpen, Apple, Droplet, Baby, Brain, Syringe, Bug, Flower2, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, Activity, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, Video, BookOpen, Apple, Droplet, Baby, Brain, Syringe, Bug, Flower2, ExternalLink, Siren, CalendarHeart, type LucideIcon } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide, FAQ, CKMTVVideo } from '../types';
 import ScrollReveal from '../components/ScrollReveal';
@@ -582,49 +582,108 @@ export default function Home() {
       )}
 
       {/* Contact / Need Help */}
-      <section className="py-10 md:py-12 bg-gradient-to-br from-green-700 to-emerald-900 text-white">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-green-800 via-emerald-900 to-gray-950 text-white">
         <div className="container-width">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">Need Help?</h2>
-            <p className="text-base text-white/80 max-w-2xl mx-auto">
-              Our team is here to help you. Reach out for appointments, inquiries, or emergency assistance.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/15 transition-colors">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-semibold">Call Us</h3>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+            {/* Left column — contact & emergency */}
+            <div className="flex flex-col">
+              <div className="mb-6">
+                <h2 className="text-2xl md:text-4xl font-bold tracking-tight">Need Help?</h2>
+                <p className="mt-3 text-sm md:text-base text-white/75 max-w-lg leading-relaxed">
+                  Our team is here to assist you with appointments, inquiries, or emergency care.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-emerald-300">
+                  <Clock className="h-3.5 w-3.5" /> Open 24/7
+                </span>
               </div>
-              <a href={`tel:${contact?.phone || '+1 (555) 123-4567'}`} className="text-lg font-bold hover:text-white/90 transition-colors">
-                {contact?.phone || '+1 (555) 123-4567'}
-              </a>
-              <p className="text-sm text-white/70 mt-2">Emergency: <a href={`tel:${contact?.emergency_phone || '+1 (555) 911-0000'}`} className="font-bold text-red-300 hover:text-red-200 transition-colors">{contact?.emergency_phone || '+1 (555) 911-0000'}</a></p>
+
+              <div className="flex flex-1 flex-col gap-4">
+                {/* Emergency card */}
+                <div className="group relative overflow-hidden rounded-2xl border border-red-400/30 bg-gradient-to-br from-red-600/90 to-red-800/90 p-5 shadow-lg shadow-red-900/30 transition hover:shadow-xl hover:shadow-red-900/40 md:p-6">
+                  <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/10 blur-2xl transition group-hover:bg-white/20" />
+                  <div className="relative flex items-center gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+                      <Siren className="h-6 w-6" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-white/80">Emergency Line</p>
+                      <a href="tel:+255786013232" className="text-lg font-bold tracking-tight text-white hover:text-white/90 md:text-xl">
+                        +255 786 013 232
+                      </a>
+                    </div>
+                    <a
+                      href="tel:+255786013232"
+                      className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-bold text-red-700 transition hover:gap-3 hover:bg-red-50 md:px-5"
+                    >
+                      <Phone className="h-4 w-4" /> Call Emergency
+                    </a>
+                  </div>
+                </div>
+
+                {/* General line card */}
+                <div className="flex flex-1 flex-col rounded-2xl border border-white/15 bg-white/10 backdrop-blur-sm p-5 transition hover:bg-white/[0.14] md:p-6">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-400/20">
+                      <Phone className="h-5 w-5 text-emerald-300" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-white/70">General Line</p>
+                      <a href="tel:+255756339619" className="text-base font-bold text-white hover:text-white/90 md:text-lg">
+                        +255 756 339 619
+                      </a>
+                    </div>
+                  </div>
+                  <div className="my-4 h-px bg-white/15" />
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-400/20">
+                      <Mail className="h-5 w-5 text-emerald-300" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-white/70">Email</p>
+                      <a href="mailto:barakarays@gmail.com" className="block truncate text-base font-bold text-white hover:text-white/90 md:text-lg">
+                        barakarays@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                  <Link
+                    to="/contact"
+                    className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-green-600 px-5 py-2.5 text-sm font-bold text-white transition hover:gap-3 hover:bg-green-500"
+                  >
+                    <CalendarHeart className="h-4 w-4" /> Book Appointment
+                  </Link>
+                </div>
+              </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/15 transition-colors">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                  <Mail className="w-5 h-5" />
+
+            {/* Right column — interactive map */}
+            <div className="relative min-h-[340px] overflow-hidden rounded-2xl border border-white/15 shadow-xl lg:min-h-full">
+              <iframe
+                src="https://maps.google.com/maps?q=Charles%20Kulwa%20Memorial%20Hospital%2C%20Uyovu%2C%20Tanzania&output=embed"
+                title="Charles Kulwa Memorial Hospital location map"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0 h-full w-full grayscale-[0.2] contrast-110"
+                style={{ border: 0 }}
+                allowFullScreen
+              />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/60 to-transparent p-4 md:p-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                  <div className="flex items-start gap-2.5">
+                    <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" />
+                    <p className="text-xs leading-relaxed text-white/90 md:text-sm">
+                      P.O. Box 4, Baraka Street, Uyovu Ward,<br className="hidden sm:block" /> Bukombe District, Geita Region, Tanzania
+                    </p>
+                  </div>
+                  <a
+                    href="https://maps.google.com/maps?q=Charles%20Kulwa%20Memorial%20Hospital%2C%20Uyovu%2C%20Tanzania"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pointer-events-auto inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-2 text-xs font-semibold text-white backdrop-blur-md transition hover:bg-white/25 hover:gap-2.5"
+                  >
+                    Open in Google Maps <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
                 </div>
-                <h3 className="text-base font-semibold">Email Us</h3>
               </div>
-              <a href={`mailto:${contact?.email || 'info@cityhospital.com'}`} className="text-lg font-bold hover:text-white/90 transition-colors">
-                {contact?.email || 'info@cityhospital.com'}
-              </a>
-              <p className="text-sm text-white/70 mt-2">We typically respond within 24 hours.</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/15 transition-colors">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-semibold">Visit Us</h3>
-              </div>
-              <p className="text-base font-medium leading-relaxed">
-                {contact?.address || '123 Medical Center Drive, Healthcare City, HC 12345'}
-              </p>
             </div>
           </div>
         </div>
