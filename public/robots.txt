@@ -1,5 +1,4 @@
-
 User-agent: *
 Allow: /
 
-Sitemap: https://ckmhospital.org/sitemap.xml
+Sitemap: https://www.ckmhospital.org/sitemap.xml
